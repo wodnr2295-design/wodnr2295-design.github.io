@@ -51,22 +51,22 @@ export const GAMES = [
     limit: 3200,
   },
   {
-    id: 'judge', name: '순간 판별', short: '판별', kind: 'react', icon: '⚖️',
+    id: 'judge', isNew: true, name: '순간 판별', short: '판별', kind: 'react', icon: '⚖️',
     desc: '지시에 맞는 숫자를 초고속 터치', tip: '“더 큰 수”인지 “짝수”인지 먼저 읽고 바로 탭하세요. 망설이면 늦습니다.',
     limit: 2600,
   },
   {
-    id: 'stopwatch', name: '초시계 스톱', short: '초시계', kind: 'react', icon: '⏱️',
+    id: 'stopwatch', isNew: true, name: '초시계 스톱', short: '초시계', kind: 'react', icon: '⏱️',
     desc: '노란 존에서 정확히 멈춰라', tip: '게이지가 노란 존 한가운데를 지나는 순간 STOP! 가운데에 가까울수록 고득점입니다.',
     limit: 3000,
   },
   {
-    id: 'pattern', name: '패턴 빈칸', short: '패턴', kind: 'brain', icon: '🔮',
+    id: 'pattern', isNew: true, name: '패턴 빈칸', short: '패턴', kind: 'brain', icon: '🔮',
     desc: '규칙을 읽고 다음 조각을 골라라', tip: '증가폭, 두 배, 반복 순환 중 어떤 규칙인지 먼저 찾으세요.',
     limit: 5200,
   },
   {
-    id: 'flash', name: '플래시 그리드', short: '플래시', kind: 'react', icon: '💡',
+    id: 'flash', isNew: true, name: '플래시 그리드', short: '플래시', kind: 'react', icon: '💡',
     desc: '번쩍이는 칸을 연속으로 타격', tip: '불빛이 꺼지기 전에 빠르게. 5개를 모두 잡으면 보너스 점수가 붙습니다.',
     limit: 5600,
   },

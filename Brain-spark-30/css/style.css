@@ -462,6 +462,13 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
   border: 1px solid var(--line);
   transition: transform .16s, border-color .2s, background .2s;
+  position: relative;
+}
+.gs-item.is-new { border-color: rgba(255,194,75,.42); }
+.gs-new {
+  position: absolute; top: 4px; right: 5px; font-style: normal;
+  font-size: 6.5px; font-weight: 800; letter-spacing: .06em; padding: 1px 3px; border-radius: 4px;
+  color: #1A0A0E; background: linear-gradient(135deg, #FFE39B, #FF8A4C);
 }
 .gs-item:active { transform: scale(0.95); border-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 .gs-item .ico { font-size: 20px; display: block; margin-bottom: 5px; filter: saturate(1.1); }

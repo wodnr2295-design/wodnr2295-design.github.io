@@ -224,10 +224,10 @@ function renderLobby() {
     <section class="block">
       <div class="block-head"><h2>종목별 집중 트레이닝</h2><span>${GAMES.length}종</span></div>
       <div class="game-strip">
-        ${GAMES.map((g) => {
+        ${[...GAMES].sort((a, b) => (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0)).map((g) => {
           const best = s.trainingBest[g.id] || 0;
-          return `<button class="gs-item" data-act="train:${g.id}" type="button">
-            <span class="ico">${g.icon}</span>
+          return `<button class="gs-item${g.isNew ? ' is-new' : ''}" data-act="train:${g.id}" type="button">
+            <span class="ico">${g.icon}</span>${g.isNew ? '<i class="gs-new">NEW</i>' : ''}
             <b>${g.short}</b>
             <span class="${best ? 'best' : ''}">${best ? num(best) : '미도전'}</span>
           </button>`;

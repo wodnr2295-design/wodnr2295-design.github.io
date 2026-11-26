@@ -70,7 +70,7 @@
     {
       "name": "training signal scores on answers",
       "pass": true,
-      "detail": "score=253"
+      "detail": "score=284"
     },
     {
       "name": "training sniper mounts its board",
@@ -90,7 +90,7 @@
     {
       "name": "training order scores on answers",
       "pass": true,
-      "detail": "score=1879"
+      "detail": "score=1881"
     },
     {
       "name": "training direction mounts its board",
@@ -100,7 +100,7 @@
     {
       "name": "training direction scores on answers",
       "pass": true,
-      "detail": "score=1953"
+      "detail": "score=1973"
     },
     {
       "name": "training stroop mounts its board",
@@ -110,7 +110,7 @@
     {
       "name": "training stroop scores on answers",
       "pass": true,
-      "detail": "score=1811"
+      "detail": "score=1812"
     },
     {
       "name": "training math mounts its board",
@@ -120,7 +120,7 @@
     {
       "name": "training math scores on answers",
       "pass": true,
-      "detail": "score=1985"
+      "detail": "score=1814"
     },
     {
       "name": "training memory mounts its board",
@@ -130,7 +130,7 @@
     {
       "name": "training memory scores on answers",
       "pass": true,
-      "detail": "score=666"
+      "detail": "score=667"
     },
     {
       "name": "training odd mounts its board",
@@ -140,7 +140,7 @@
     {
       "name": "training odd scores on answers",
       "pass": true,
-      "detail": "score=1984"
+      "detail": "score=1987"
     },
     {
       "name": "training match mounts its board",
@@ -160,7 +160,7 @@
     {
       "name": "training judge scores on answers",
       "pass": true,
-      "detail": "score=1898"
+      "detail": "score=1896"
     },
     {
       "name": "training stopwatch mounts its board",
@@ -170,7 +170,7 @@
     {
       "name": "training stopwatch scores on answers",
       "pass": true,
-      "detail": "score=675"
+      "detail": "score=727"
     },
     {
       "name": "training pattern mounts its board",
@@ -180,7 +180,7 @@
     {
       "name": "training pattern scores on answers",
       "pass": true,
-      "detail": "score=2069"
+      "detail": "score=1249"
     },
     {
       "name": "training flash mounts its board",
@@ -190,7 +190,7 @@
     {
       "name": "training flash scores on answers",
       "pass": true,
-      "detail": "score=1894"
+      "detail": "score=1892"
     },
     {
       "name": "all thirteen mini-games were answered by the bot",
@@ -200,7 +200,7 @@
     {
       "name": "training bests stored per game",
       "pass": true,
-      "detail": "{'signal': 253, 'sniper': 1898, 'order': 1879, 'direction': 1953, 'stroop': 1811, 'math': 1985, 'memory': 666, 'odd': 1984, 'match': 1812, 'judge': 1898, 'stopwatch': 675, 'pattern': 2069, 'flash': 1894}"
+      "detail": "{'signal': 284, 'sniper': 1898, 'order': 1881, 'direction': 1973, 'stroop': 1812, 'math': 1814, 'memory': 667, 'odd': 1987, 'match': 1812, 'judge': 1896, 'stopwatch': 727, 'pattern': 1249, 'flash': 1892}"
     },
     {
       "name": "thirteen sessions recorded",
@@ -210,7 +210,7 @@
     {
       "name": "theme purchase deducts coins",
       "pass": true,
-      "detail": "747 -> 327"
+      "detail": "712 -> 292"
     },
     {
       "name": "theme equipped right away",
@@ -275,7 +275,7 @@
     {
       "name": "result has a score",
       "pass": true,
-      "detail": "54907"
+      "detail": "48960"
     },
     {
       "name": "result has a grade",
@@ -285,17 +285,17 @@
     {
       "name": "result reports accuracy",
       "pass": true,
-      "detail": "99"
+      "detail": "100"
     },
     {
       "name": "result reports reaction ms",
       "pass": true,
-      "detail": "287"
+      "detail": "550"
     },
     {
       "name": "result screen copies a challenge link",
       "pass": true,
-      "detail": "🧠 브레인 스파크에서 54,907점 찍음! 이길 수 있으면 눌러봐 👉 http://127.0.0.1:37389/index.html?c=eyJ2IjoxLCJuIjo"
+      "detail": "🧠 브레인 스파크에서 48,960점 찍음! 이길 수 있으면 눌러봐 👉 http://127.0.0.1:33967/index.html?c=eyJ2IjoxLCJuIjo"
     },
     {
       "name": "challenge link carries a payload",
@@ -305,7 +305,7 @@
     {
       "name": "challenge saved to records",
       "pass": true,
-      "detail": "54907 vs 54907"
+      "detail": "48960 vs 48960"
     },
     {
       "name": "cycle counter advanced",
@@ -315,12 +315,12 @@
     {
       "name": "coins increased",
       "pass": true,
-      "detail": "207 -> 507"
+      "detail": "172 -> 472"
     },
     {
       "name": "best score updated",
       "pass": true,
-      "detail": "54907"
+      "detail": "48960"
     },
     {
       "name": "milestone claim button appears",
@@ -330,7 +330,7 @@
     {
       "name": "milestone claim pays coins",
       "pass": true,
-      "detail": "507 -> 587"
+      "detail": "472 -> 552"
     },
     {
       "name": "milestone marked claimed",
@@ -345,7 +345,7 @@
     {
       "name": "chest grants coins",
       "pass": true,
-      "detail": "587 -> 1287"
+      "detail": "552 -> 1252"
     },
     {
       "name": "chest grants limited items",
@@ -370,17 +370,17 @@
     {
       "name": "records screen copies a challenge link",
       "pass": true,
-      "detail": "🧠 브레인 스파크에서 54,907점 찍음! 이길 수 있으면 눌러봐 👉 http://127.0.0.1:37389/index.ht"
+      "detail": "🧠 브레인 스파크에서 48,960점 찍음! 이길 수 있으면 눌러봐 👉 http://127.0.0.1:33967/index.ht"
     },
     {
       "name": "coins survive reload",
       "pass": true,
-      "detail": "1287"
+      "detail": "1252"
     },
     {
       "name": "best score survives reload",
       "pass": true,
-      "detail": "54907"
+      "detail": "48960"
     },
     {
       "name": "records survive reload",
@@ -420,27 +420,27 @@
     {
       "name": "challenge link registers the friend",
       "pass": true,
-      "detail": "[{'name': '번개두뇌', 'score': 54907, 'avgMs': 287, 'accuracy': 99, 'maxCombo': 39, 'avatar': 'fox', 'frame': 'basic', 'title': 'rookie', 'mode': 'challenge', 'playedAt': '2026-11-26T09:06:53.568Z', 'at': 1795684026701}]"
+      "detail": "[{'name': '번개두뇌', 'score': 48960, 'avgMs': 550, 'accuracy': 100, 'maxCombo': 58, 'avatar': 'fox', 'frame': 'basic', 'title': 'rookie', 'mode': 'challenge', 'playedAt': '2026-11-26T09:15:35.181Z', 'at': 1795684548370}]"
     },
     {
       "name": "challenge link carries the sent score",
       "pass": true,
-      "detail": "54907 vs 54907"
+      "detail": "48960 vs 48960"
     },
     {
       "name": "address bar is cleaned after intake",
       "pass": true,
-      "detail": "http://127.0.0.1:37389/index.html?test=1"
+      "detail": "http://127.0.0.1:33967/index.html?test=1"
     },
     {
       "name": "challenge banner names the friend",
       "pass": true,
-      "detail": "⚔️ / 번개두뇌님의 도전장! / 목표 54,907점 · 1분 안에 이겨보세요 / 바로 도전"
+      "detail": "⚔️ / 번개두뇌님의 도전장! / 목표 48,960점 · 1분 안에 이겨보세요 / 바로 도전"
     },
     {
       "name": "challenge banner shows the target score",
       "pass": true,
-      "detail": "⚔️ / 번개두뇌님의 도전장! / 목표 54,907점 · 1분 안에 이겨보세요 / 바로 도전"
+      "detail": "⚔️ / 번개두뇌님의 도전장! / 목표 48,960점 · 1분 안에 이겨보세요 / 바로 도전"
     },
     {
       "name": "banner button starts the challenge",
@@ -475,7 +475,7 @@
     {
       "name": "a higher score from the same friend replaces the row",
       "pass": true,
-      "detail": "[{'name': '번개두뇌', 'score': 56407, 'avgMs': 180, 'accuracy': 92, 'maxCombo': 18, 'avatar': 'fox', 'frame': 'bronze', 'title': 'rookie', 'mode': 'challenge', 'playedAt': '2026-11-26T09:07:12.396Z', 'at': 1795684026701}]"
+      "detail": "[{'name': '번개두뇌', 'score': 50460, 'avgMs': 180, 'accuracy': 92, 'maxCombo': 18, 'avatar': 'fox', 'frame': 'bronze', 'title': 'rookie', 'mode': 'challenge', 'playedAt': '2026-11-26T09:15:54.257Z', 'at': 1795684548370}]"
     },
     {
       "name": "friend list can be cleared",
@@ -490,7 +490,7 @@
     {
       "name": "reset keeps coins",
       "pass": true,
-      "detail": "1287 -> 1287"
+      "detail": "1252 -> 1252"
     },
     {
       "name": "reset keeps owned items",
