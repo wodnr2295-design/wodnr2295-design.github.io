@@ -111,15 +111,18 @@ const sniper = {
     wrap.append(field, hint);
     ctx.host.append(wrap);
 
-    const slots = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
-    const bombCount = ctx.difficulty > 0.6 ? (ctx.difficulty > 1.3 ? 3 : 2) : 1;
-    const goldSlot = slots[0];
-    const bombSlots = slots.slice(1, 1 + bombCount);
+    // 4x2 board; keep the gold target away from the bombs so mis-taps are fair
+    const cells = shuffle([0, 1, 2, 3, 4, 5, 6, 7]);
+    const colOf = (n) => n % 4;
+    const goldSlot = cells[0];
+    const bombCount = ctx.difficulty > 0.55 ? 2 : 1;
+    let bombSlots = cells.slice(1).filter((c) => Math.abs(colOf(c) - colOf(goldSlot)) >= 2).slice(0, bombCount);
+    if (bombSlots.length < bombCount) bombSlots = cells.slice(1).filter((c) => c !== goldSlot).slice(0, bombCount);
     let resolved = false;
 
-    slots.forEach((slot, i) => {
-      const col = i % 4;
-      const row = Math.floor(i / 4);
+    cells.forEach((slot) => {
+      const col = slot % 4;
+      const row = Math.floor(slot / 4);
       const isGold = slot === goldSlot;
       const isBomb = bombSlots.includes(slot);
       if (!isGold && !isBomb) {

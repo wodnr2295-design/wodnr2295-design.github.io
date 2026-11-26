@@ -70,7 +70,7 @@
     {
       "name": "training signal scores on answers",
       "pass": true,
-      "detail": "score=293"
+      "detail": "score=631"
     },
     {
       "name": "training sniper mounts its board",
@@ -80,7 +80,7 @@
     {
       "name": "training sniper scores on answers",
       "pass": true,
-      "detail": "score=1897"
+      "detail": "score=1899"
     },
     {
       "name": "training order mounts its board",
@@ -90,7 +90,7 @@
     {
       "name": "training order scores on answers",
       "pass": true,
-      "detail": "score=1879"
+      "detail": "score=1882"
     },
     {
       "name": "training direction mounts its board",
@@ -100,7 +100,7 @@
     {
       "name": "training direction scores on answers",
       "pass": true,
-      "detail": "score=2136"
+      "detail": "score=1785"
     },
     {
       "name": "training stroop mounts its board",
@@ -110,7 +110,7 @@
     {
       "name": "training stroop scores on answers",
       "pass": true,
-      "detail": "score=1811"
+      "detail": "score=1812"
     },
     {
       "name": "training math mounts its board",
@@ -120,7 +120,7 @@
     {
       "name": "training math scores on answers",
       "pass": true,
-      "detail": "score=1862"
+      "detail": "score=1813"
     },
     {
       "name": "training memory mounts its board",
@@ -130,7 +130,7 @@
     {
       "name": "training memory scores on answers",
       "pass": true,
-      "detail": "score=668"
+      "detail": "score=666"
     },
     {
       "name": "training odd mounts its board",
@@ -140,7 +140,7 @@
     {
       "name": "training odd scores on answers",
       "pass": true,
-      "detail": "score=1983"
+      "detail": "score=1985"
     },
     {
       "name": "training match mounts its board",
@@ -150,7 +150,7 @@
     {
       "name": "training match scores on answers",
       "pass": true,
-      "detail": "score=1811"
+      "detail": "score=1812"
     },
     {
       "name": "all nine mini-games were answered by the bot",
@@ -160,7 +160,7 @@
     {
       "name": "training bests stored per game",
       "pass": true,
-      "detail": "{'signal': 293, 'sniper': 1897, 'order': 1879, 'direction': 2136, 'stroop': 1811, 'math': 1862, 'memory': 668, 'odd': 1983, 'match': 1811}"
+      "detail": "{'signal': 631, 'sniper': 1899, 'order': 1882, 'direction': 1785, 'stroop': 1812, 'math': 1813, 'memory': 666, 'odd': 1985, 'match': 1812}"
     },
     {
       "name": "nine sessions recorded",
@@ -220,12 +220,12 @@
     {
       "name": "challenge runs the full 30 seconds",
       "pass": true,
-      "detail": "28.9s"
+      "detail": "28.8s"
     },
     {
       "name": "challenge cycled multiple games",
       "pass": true,
-      "detail": "['direction', 'match', 'math', 'memory', 'odd', 'order', 'signal', 'sniper', 'stroop']"
+      "detail": "['direction', 'match', 'math', 'memory', 'odd', 'signal', 'sniper', 'stroop']"
     },
     {
       "name": "result overlay appears",
@@ -235,7 +235,7 @@
     {
       "name": "result has a score",
       "pass": true,
-      "detail": "28003"
+      "detail": "18740"
     },
     {
       "name": "result has a grade",
@@ -250,12 +250,12 @@
     {
       "name": "result reports reaction ms",
       "pass": true,
-      "detail": "550"
+      "detail": "655"
     },
     {
       "name": "challenge saved to records",
       "pass": true,
-      "detail": "28003 vs 28003"
+      "detail": "18740 vs 18740"
     },
     {
       "name": "cycle counter advanced",
@@ -265,12 +265,12 @@
     {
       "name": "coins increased",
       "pass": true,
-      "detail": "123 -> 798"
+      "detail": "123 -> 586"
     },
     {
       "name": "best score updated",
       "pass": true,
-      "detail": "28003"
+      "detail": "18740"
     },
     {
       "name": "milestone claim button appears",
@@ -280,7 +280,7 @@
     {
       "name": "milestone claim pays coins",
       "pass": true,
-      "detail": "798 -> 858"
+      "detail": "586 -> 646"
     },
     {
       "name": "milestone marked claimed",
@@ -295,7 +295,7 @@
     {
       "name": "chest grants coins",
       "pass": true,
-      "detail": "858 -> 1358"
+      "detail": "646 -> 1146"
     },
     {
       "name": "chest grants limited items",
@@ -320,17 +320,17 @@
     {
       "name": "share copies a summary",
       "pass": true,
-      "detail": "🧠 브레인 스파크 30 — 두뇌·반응속도 챌린지 / 최고 점수 28,003점 · 등급 S+ / 평균 반응속도 438"
+      "detail": "🧠 브레인 스파크 30 — 두뇌·반응속도 챌린지 / 최고 점수 18,740점 · 등급 S+ / 평균 반응속도 445"
     },
     {
       "name": "coins survive reload",
       "pass": true,
-      "detail": "1358"
+      "detail": "1146"
     },
     {
       "name": "best score survives reload",
       "pass": true,
-      "detail": "28003"
+      "detail": "18740"
     },
     {
       "name": "records survive reload",
@@ -375,7 +375,7 @@
     {
       "name": "reset keeps coins",
       "pass": true,
-      "detail": "1358 -> 1358"
+      "detail": "1146 -> 1146"
     },
     {
       "name": "reset keeps owned items",
