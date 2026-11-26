@@ -1,0 +1,392 @@
+{
+  "passed": 77,
+  "total": 77,
+  "checks": [
+    {
+      "name": "boots into the lobby",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "splash dismisses",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "five navigation tabs present",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "korean UI renders",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "nine training chips",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "starts with 200 coins",
+      "pass": true,
+      "detail": "200"
+    },
+    {
+      "name": "tab rank renders",
+      "pass": true,
+      "detail": "랭킹"
+    },
+    {
+      "name": "tab rewards renders",
+      "pass": true,
+      "detail": "10판 보상"
+    },
+    {
+      "name": "tab shop renders",
+      "pass": true,
+      "detail": "커스터마이징"
+    },
+    {
+      "name": "tab records renders",
+      "pass": true,
+      "detail": "내 기록"
+    },
+    {
+      "name": "training ranking mode shows game chips",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "my row is highlighted",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "training signal mounts its board",
+      "pass": true,
+      "detail": "host=signal nodes=True"
+    },
+    {
+      "name": "training signal scores on answers",
+      "pass": true,
+      "detail": "score=293"
+    },
+    {
+      "name": "training sniper mounts its board",
+      "pass": true,
+      "detail": "host=sniper nodes=True"
+    },
+    {
+      "name": "training sniper scores on answers",
+      "pass": true,
+      "detail": "score=1897"
+    },
+    {
+      "name": "training order mounts its board",
+      "pass": true,
+      "detail": "host=order nodes=True"
+    },
+    {
+      "name": "training order scores on answers",
+      "pass": true,
+      "detail": "score=1879"
+    },
+    {
+      "name": "training direction mounts its board",
+      "pass": true,
+      "detail": "host=direction nodes=True"
+    },
+    {
+      "name": "training direction scores on answers",
+      "pass": true,
+      "detail": "score=2136"
+    },
+    {
+      "name": "training stroop mounts its board",
+      "pass": true,
+      "detail": "host=stroop nodes=True"
+    },
+    {
+      "name": "training stroop scores on answers",
+      "pass": true,
+      "detail": "score=1811"
+    },
+    {
+      "name": "training math mounts its board",
+      "pass": true,
+      "detail": "host=math nodes=True"
+    },
+    {
+      "name": "training math scores on answers",
+      "pass": true,
+      "detail": "score=1862"
+    },
+    {
+      "name": "training memory mounts its board",
+      "pass": true,
+      "detail": "host=memory nodes=True"
+    },
+    {
+      "name": "training memory scores on answers",
+      "pass": true,
+      "detail": "score=668"
+    },
+    {
+      "name": "training odd mounts its board",
+      "pass": true,
+      "detail": "host=odd nodes=True"
+    },
+    {
+      "name": "training odd scores on answers",
+      "pass": true,
+      "detail": "score=1983"
+    },
+    {
+      "name": "training match mounts its board",
+      "pass": true,
+      "detail": "host=match nodes=True"
+    },
+    {
+      "name": "training match scores on answers",
+      "pass": true,
+      "detail": "score=1811"
+    },
+    {
+      "name": "all nine mini-games were answered by the bot",
+      "pass": true,
+      "detail": "['direction', 'match', 'math', 'memory', 'odd', 'order', 'signal', 'sniper', 'stroop']"
+    },
+    {
+      "name": "training bests stored per game",
+      "pass": true,
+      "detail": "{'signal': 293, 'sniper': 1897, 'order': 1879, 'direction': 2136, 'stroop': 1811, 'math': 1862, 'memory': 668, 'odd': 1983, 'match': 1811}"
+    },
+    {
+      "name": "nine sessions recorded",
+      "pass": true,
+      "detail": "9"
+    },
+    {
+      "name": "theme purchase deducts coins",
+      "pass": true,
+      "detail": "663 -> 243"
+    },
+    {
+      "name": "theme equipped right away",
+      "pass": true,
+      "detail": "sunset"
+    },
+    {
+      "name": "theme applied to frame",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "owned item persisted",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "avatar purchase + equip",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "limited theme shows lock state",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "nickname edited and saved",
+      "pass": true,
+      "detail": "번개두뇌"
+    },
+    {
+      "name": "nickname shows in lobby",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "pause overlay opens",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "pause overlay closes on resume",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "challenge runs the full 30 seconds",
+      "pass": true,
+      "detail": "28.9s"
+    },
+    {
+      "name": "challenge cycled multiple games",
+      "pass": true,
+      "detail": "['direction', 'match', 'math', 'memory', 'odd', 'order', 'signal', 'sniper', 'stroop']"
+    },
+    {
+      "name": "result overlay appears",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "result has a score",
+      "pass": true,
+      "detail": "28003"
+    },
+    {
+      "name": "result has a grade",
+      "pass": true,
+      "detail": "S+"
+    },
+    {
+      "name": "result reports accuracy",
+      "pass": true,
+      "detail": "100"
+    },
+    {
+      "name": "result reports reaction ms",
+      "pass": true,
+      "detail": "550"
+    },
+    {
+      "name": "challenge saved to records",
+      "pass": true,
+      "detail": "28003 vs 28003"
+    },
+    {
+      "name": "cycle counter advanced",
+      "pass": true,
+      "detail": "{'index': 1, 'count': 10, 'claimed': [], 'chest': False}"
+    },
+    {
+      "name": "coins increased",
+      "pass": true,
+      "detail": "123 -> 798"
+    },
+    {
+      "name": "best score updated",
+      "pass": true,
+      "detail": "28003"
+    },
+    {
+      "name": "milestone claim button appears",
+      "pass": true,
+      "detail": "4"
+    },
+    {
+      "name": "milestone claim pays coins",
+      "pass": true,
+      "detail": "798 -> 858"
+    },
+    {
+      "name": "milestone marked claimed",
+      "pass": true,
+      "detail": "[1]"
+    },
+    {
+      "name": "chest opens after 10 games",
+      "pass": true,
+      "detail": "1"
+    },
+    {
+      "name": "chest grants coins",
+      "pass": true,
+      "detail": "858 -> 1358"
+    },
+    {
+      "name": "chest grants limited items",
+      "pass": true,
+      "detail": "{'themes': ['studio', 'sunset', 'aurora'], 'avatars': ['brain', 'fox'], 'frames': ['basic'], 'particles': ['spark'], 'titles': ['rookie', 'ten']}"
+    },
+    {
+      "name": "next cycle resets progress",
+      "pass": true,
+      "detail": "{'index': 2, 'count': 0, 'claimed': [], 'chest': False}"
+    },
+    {
+      "name": "records chart renders a line",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "history list shows runs",
+      "pass": true,
+      "detail": "10"
+    },
+    {
+      "name": "share copies a summary",
+      "pass": true,
+      "detail": "🧠 브레인 스파크 30 — 두뇌·반응속도 챌린지 / 최고 점수 28,003점 · 등급 S+ / 평균 반응속도 438"
+    },
+    {
+      "name": "coins survive reload",
+      "pass": true,
+      "detail": "1358"
+    },
+    {
+      "name": "best score survives reload",
+      "pass": true,
+      "detail": "28003"
+    },
+    {
+      "name": "records survive reload",
+      "pass": true,
+      "detail": "10"
+    },
+    {
+      "name": "theme survives reload",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "nickname survives reload",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "reward cycle survives reload",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "360x640 has no horizontal overflow",
+      "pass": true,
+      "detail": "360"
+    },
+    {
+      "name": "360x640 game has no horizontal overflow",
+      "pass": true,
+      "detail": "360"
+    },
+    {
+      "name": "desktop centers a phone-width frame",
+      "pass": true,
+      "detail": "[440, 864]"
+    },
+    {
+      "name": "reset clears records",
+      "pass": true,
+      "detail": "0"
+    },
+    {
+      "name": "reset keeps coins",
+      "pass": true,
+      "detail": "1358 -> 1358"
+    },
+    {
+      "name": "reset keeps owned items",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "no console errors or warnings",
+      "pass": true,
+      "detail": "[]"
+    }
+  ],
+  "console": []
+}

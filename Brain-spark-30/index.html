@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#05070E" />
+<meta name="color-scheme" content="dark" />
+<title>브레인 스파크 30 · BRAIN SPARK 30</title>
+<meta name="description" content="30초 안에 두뇌를 깨우는 9가지 미니게임. 반응속도와 두뇌 회전을 한 번에 측정하고 기록을 쌓아보세요." />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="BRAIN SPARK" />
+<meta property="og:title" content="브레인 스파크 30" />
+<meta property="og:description" content="30초, 9가지 미니게임으로 측정하는 두뇌·반응속도 챌린지." />
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+<link rel="apple-touch-icon" href="icons/icon-192.png" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3.5 10.6 12 3.4l8.5 7.2V20a1 1 0 0 1-1 1h-5.2v-6.3H9.7V21H4.5a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7.5 4h9v4.2a4.5 4.5 0 0 1-9 0z"/><path d="M7.5 5.4H4.2v1.8A3.2 3.2 0 0 0 7.5 10.4M16.5 5.4h3.3v1.8a3.2 3.2 0 0 1-3.3 3.2"/><path d="M12 12.8V17M8.5 20.6h7M10 17h4"/></symbol>
+    <symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 11.5h16V20a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M2.8 7.2h18.4v4.3H2.8zM12 7.2V21"/><path d="M12 7.2S11 3 8.7 3 6.8 7.2 12 7.2zM12 7.2S13 3 15.3 3 17.2 7.2 12 7.2z"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3.2a8.8 8.8 0 1 0 0 17.6c1.4 0 2.1-.9 2.1-2 0-1.5 1-2.1 2.3-2.1h1.4c1.7 0 3-1.3 3-3.1C20.8 7 16.8 3.2 12 3.2z"/><circle cx="8.1" cy="9.4" r="1.2"/><circle cx="12" cy="7.4" r="1.2"/><circle cx="15.9" cy="9.4" r="1.2"/><circle cx="8.4" cy="14" r="1.2"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13.2 2.5 4.8 13.4h5.1L9.6 21.5l9-11.3h-5.5z"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4.5 14.2v-4.4a1 1 0 0 1 1-1h2.3l3.9-3.2a.8.8 0 0 1 1.3.6v11.6a.8.8 0 0 1-1.3.6l-3.9-3.2H5.5a1 1 0 0 1-1-1z"/><path d="M16.4 8.6a4.8 4.8 0 0 1 0 6.8M18.8 6.2a8.2 8.2 0 0 1 0 11.6"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4.5 14.2v-4.4a1 1 0 0 1 1-1h2.3l3.9-3.2a.8.8 0 0 1 1.3.6v11.6a.8.8 0 0 1-1.3.6l-3.9-3.2H5.5a1 1 0 0 1-1-1z"/><path d="M16.6 9.6l4.4 4.8M21 9.6l-4.4 4.8"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5.4l10-2v12.2"/><circle cx="6.4" cy="18.2" r="2.6"/><circle cx="16.4" cy="15.8" r="2.6"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+    <symbol id="i-pencil" viewBox="0 0 24 24"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17v3z"/><path d="M13.5 6.5 17 10"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 16V4M8 7.5 12 3.5l4 4M5 13v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.8 19 12 7 19.2z"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.4"/><circle cx="12" cy="12" r="4.4"/><circle cx="12" cy="12" r="1"/></symbol>
+    <symbol id="i-coin" viewBox="0 0 24 24"><path d="M12 2.8 21 12l-9 9.2L3 12z"/><path d="M12 7.4 16.6 12 12 16.6 7.4 12z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.2V12l3.4 2.2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2.5 14 9l6.5 2-6.5 2-2 6.5-2-6.5L3.5 11 10 9z"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8.5 10V7.5a3.5 3.5 0 0 1 7 0V10"/></symbol>
+    <symbol id="i-reset" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.6-5.9M4 4.5V10h5.5"/></symbol>
+  </defs>
+</svg>
+
+<div class="page-bg" aria-hidden="true">
+  <span class="pg-orb a"></span>
+  <span class="pg-orb b"></span>
+  <span class="pg-grid"></span>
+</div>
+
+<div id="app">
+  <div id="frame" data-theme="studio">
+    <canvas id="fx-canvas" aria-hidden="true"></canvas>
+
+    <header id="topbar">
+      <div class="brand" id="brand">
+        <span class="brand-mark"><svg><use href="#i-bolt"/></svg></span>
+        <span class="brand-type">BRAIN<span class="thin">SPARK</span><em>30</em></span>
+      </div>
+      <div class="top-actions">
+        <button id="btn-bgm" class="icon-btn" type="button" aria-label="배경음악" aria-pressed="true"><svg><use href="#i-music"/></svg></button>
+        <button id="btn-sfx" class="icon-btn" type="button" aria-label="효과음" aria-pressed="true"><svg><use href="#i-sound"/></svg></button>
+        <div class="coin-pill" id="top-coins" aria-label="보유 코인">
+          <svg class="coin-ico"><use href="#i-coin"/></svg><b id="coin-value">0</b>
+        </div>
+      </div>
+    </header>
+
+    <main id="screens">
+      <section class="screen" data-screen="lobby" aria-label="로비"></section>
+      <section class="screen" data-screen="rank" aria-label="랭킹"></section>
+      <section class="screen" data-screen="rewards" aria-label="10판 보상"></section>
+      <section class="screen" data-screen="shop" aria-label="커스터마이징"></section>
+      <section class="screen" data-screen="records" aria-label="내 기록"></section>
+    </main>
+
+    <nav id="tabbar" aria-label="주요 메뉴">
+      <button type="button" class="tab" data-tab="lobby" aria-current="page"><svg><use href="#i-home"/></svg><span>로비</span></button>
+      <button type="button" class="tab" data-tab="rank"><svg><use href="#i-trophy"/></svg><span>랭킹</span></button>
+      <button type="button" class="tab" data-tab="rewards"><svg><use href="#i-gift"/></svg><span>10판 보상</span><i class="tab-dot" id="reward-dot" hidden></i></button>
+      <button type="button" class="tab" data-tab="shop"><svg><use href="#i-palette"/></svg><span>커스터마이징</span></button>
+      <button type="button" class="tab" data-tab="records"><svg><use href="#i-chart"/></svg><span>내 기록</span></button>
+    </nav>
+
+    <!-- ------------------------------------------------------------- game -->
+    <section id="game-layer" class="layer" hidden aria-label="게임 진행">
+      <div class="game-top">
+        <button id="game-quit" class="round-btn" type="button" aria-label="그만두기"><svg><use href="#i-close"/></svg></button>
+        <div class="hud-block">
+          <span class="hud-k">SCORE</span>
+          <b id="hud-score" class="hud-v">0</b>
+        </div>
+        <div class="hud-combo" id="hud-combo" data-level="0">
+          <b id="combo-mult">x1.0</b>
+          <span id="combo-count">콤보 0</span>
+        </div>
+      </div>
+      <div class="timer-wrap">
+        <div class="timer-fill" id="timer-fill"></div>
+      </div>
+      <div class="hud-pop" id="hud-pop" aria-hidden="true"></div>
+      <div class="game-stage">
+        <div class="round-banner" id="round-banner"></div>
+        <div id="game-host" class="game-host"></div>
+        <div class="hit-label" id="hit-label" aria-live="polite"></div>
+        <div class="round-flash" id="round-flash" aria-hidden="true"></div>
+      </div>
+      <div class="game-foot">
+        <div class="foot-time"><svg><use href="#i-clock"/></svg><span id="game-time">30.0</span><i>s</i></div>
+        <div class="round-pips" id="round-pips"></div>
+        <div class="foot-mode" id="game-mode">30초 종합 챌린지</div>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------- pause -->
+    <section id="pause-layer" class="layer dim" hidden aria-label="일시정지">
+      <div class="pause-card">
+        <span class="pause-ico">⏸</span>
+        <h2>잠시 멈춤</h2>
+        <p>30초 시계도 함께 멈춰 있어요.</p>
+        <button id="btn-resume" class="btn primary" type="button">계속하기</button>
+        <button id="btn-abort" class="btn quiet" type="button">그만두기 (기록 안 됨)</button>
+      </div>
+    </section>
+
+    <!-- ------------------------------------------------------------ result -->
+    <section id="result-layer" class="layer" hidden aria-label="결과"></section>
+
+    <!-- ------------------------------------------------------------- modal -->
+    <div id="modal-layer" class="modal-layer" hidden aria-hidden="true">
+      <div class="modal-scrim" data-close="1"></div>
+      <div class="modal-card" role="dialog" aria-modal="true" id="modal-card"></div>
+    </div>
+
+    <div id="toast-stack" class="toast-stack" aria-live="polite"></div>
+
+    <div id="splash" class="splash">
+      <div class="splash-inner">
+        <span class="splash-mark"><svg><use href="#i-bolt"/></svg></span>
+        <b>BRAIN SPARK <em>30</em></b>
+        <span class="splash-bar"><i></i></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>

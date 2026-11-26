@@ -1,0 +1,4 @@
+tests/*.png
+tests/qa/
+__pycache__/
+.DS_Store

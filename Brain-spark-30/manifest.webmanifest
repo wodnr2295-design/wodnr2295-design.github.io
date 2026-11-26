@@ -1,0 +1,18 @@
+{
+  "name": "브레인 스파크 30 — 두뇌·반응속도 챌린지",
+  "short_name": "BRAIN SPARK 30",
+  "description": "30초 안에 9가지 미니게임으로 두뇌 회전과 반응속도를 측정하는 캐주얼 게임.",
+  "lang": "ko",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#05070E",
+  "theme_color": "#05070E",
+  "categories": ["games", "entertainment"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
