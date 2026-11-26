@@ -212,7 +212,7 @@ export function recordGame(result) {
     at: new Date().toISOString(),
     mode: result.mode,
     gameId: result.gameId || null,
-    gameName: result.gameId ? (GAME_BY_ID[result.gameId]?.name || result.gameId) : '30초 종합 챌린지',
+    gameName: result.gameId ? (GAME_BY_ID[result.gameId]?.name || result.gameId) : '1분 종합 챌린지',
     score: result.score,
     grade: result.grade.grade,
     accuracy: result.accuracy,

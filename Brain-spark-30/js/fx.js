@@ -1,4 +1,4 @@
-// BRAIN SPARK 30 — touch particles, ripples and haptics
+// BRAIN SPARK 60 — touch particles, ripples and haptics
 let canvas = null;
 let ctx2d = null;
 let dpr = 1;

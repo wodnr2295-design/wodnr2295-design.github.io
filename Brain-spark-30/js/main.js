@@ -1,4 +1,4 @@
-// BRAIN SPARK 30 — entry point
+// BRAIN SPARK 60 — entry point
 import { initFX, resize } from './fx.js';
 import { boot } from './ui.js';
 import { unlockAudio } from './audio.js';

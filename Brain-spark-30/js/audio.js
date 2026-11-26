@@ -1,4 +1,4 @@
-// BRAIN SPARK 30 — tiny Web Audio engine (SFX + ambient BGM, no assets)
+// BRAIN SPARK 60 — tiny Web Audio engine (SFX + ambient BGM, no assets)
 let ac = null;
 let master = null;
 let sfxBus = null;
