@@ -1,7 +1,8 @@
-// BRAIN SPARK 30 — game catalogue, shop, leaderboard seeds
+// BRAIN SPARK 60 — game catalogue, shop, leaderboard seeds
 // Pure data, no DOM.
 
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '2.0.0';
+export const ROUND_SECONDS = 60;
 
 export const GAMES = [
   {
@@ -48,6 +49,26 @@ export const GAMES = [
     id: 'match', name: '도형 매칭', short: '매칭', kind: 'brain', icon: '🔷',
     desc: '같은 기호 조합을 골라라', tip: '제시된 기호 조합과 순서까지 똑같은 것을 고르세요.',
     limit: 3200,
+  },
+  {
+    id: 'judge', name: '순간 판별', short: '판별', kind: 'react', icon: '⚖️',
+    desc: '지시에 맞는 숫자를 초고속 터치', tip: '“더 큰 수”인지 “짝수”인지 먼저 읽고 바로 탭하세요. 망설이면 늦습니다.',
+    limit: 2600,
+  },
+  {
+    id: 'stopwatch', name: '초시계 스톱', short: '초시계', kind: 'react', icon: '⏱️',
+    desc: '노란 존에서 정확히 멈춰라', tip: '게이지가 노란 존 한가운데를 지나는 순간 STOP! 가운데에 가까울수록 고득점입니다.',
+    limit: 3000,
+  },
+  {
+    id: 'pattern', name: '패턴 빈칸', short: '패턴', kind: 'brain', icon: '🔮',
+    desc: '규칙을 읽고 다음 조각을 골라라', tip: '증가폭, 두 배, 반복 순환 중 어떤 규칙인지 먼저 찾으세요.',
+    limit: 5200,
+  },
+  {
+    id: 'flash', name: '플래시 그리드', short: '플래시', kind: 'react', icon: '💡',
+    desc: '번쩍이는 칸을 연속으로 타격', tip: '불빛이 꺼지기 전에 빠르게. 5개를 모두 잡으면 보너스 점수가 붙습니다.',
+    limit: 5600,
   },
 ];
 
@@ -119,7 +140,7 @@ export const TITLES = [
   { id: 'calc', kind: 'titles', name: '암산 요정', tag: '코인', price: 300 },
   { id: 'memory', kind: 'titles', name: '기억의 서랍', tag: '코인', price: 340 },
   { id: 'combo', kind: 'titles', name: '콤보 브레이커', tag: '코인', price: 420 },
-  { id: 'thirty', kind: 'titles', name: '30초의 지배자', tag: '코인', price: 600 },
+  { id: 'thirty', kind: 'titles', name: '1분의 지배자', tag: '코인', price: 600 },
   { id: 'ten', kind: 'titles', name: '10연전의 지배자', tag: '10판 보상', price: 0 },
 ];
 
@@ -136,63 +157,67 @@ export const SHOP_TABS = [
 /* -------------------------------------------------------------- tier/grade */
 
 export const GRADES = [
-  { grade: 'S+', min: 8000, color: '#5CFFC8', label: '전설적인 두뇌' },
-  { grade: 'S', min: 6000, color: '#37D9FF', label: '프로 두뇌' },
-  { grade: 'A', min: 4600, color: '#8C9BFF', label: '상위 15%' },
-  { grade: 'B', min: 3400, color: '#C9A6FF', label: '평균 이상' },
-  { grade: 'C', min: 2300, color: '#FFC24B', label: '성장 중' },
+  { grade: 'S+', min: 15600, color: '#5CFFC8', label: '전설적인 두뇌' },
+  { grade: 'S', min: 12000, color: '#37D9FF', label: '프로 두뇌' },
+  { grade: 'A', min: 9200, color: '#8C9BFF', label: '상위 15%' },
+  { grade: 'B', min: 6800, color: '#C9A6FF', label: '평균 이상' },
+  { grade: 'C', min: 4600, color: '#FFC24B', label: '성장 중' },
   { grade: 'D', min: 0, color: '#FF8A8A', label: '워밍업' },
 ];
 
 export const TIERS = [
   { id: 'bronze', name: '브론즈', min: 0, color: '#D08A5A' },
-  { id: 'silver', name: '실버', min: 2000, color: '#C3CEE0' },
-  { id: 'gold', name: '골드', min: 3500, color: '#FFC24B' },
-  { id: 'platinum', name: '플래티넘', min: 5000, color: '#6EE7E0' },
-  { id: 'diamond', name: '다이아', min: 6500, color: '#8FB4FF' },
-  { id: 'master', name: '마스터', min: 8000, color: '#FF7AD9' },
+  { id: 'silver', name: '실버', min: 3800, color: '#C3CEE0' },
+  { id: 'gold', name: '골드', min: 6600, color: '#FFC24B' },
+  { id: 'platinum', name: '플래티넘', min: 9600, color: '#6EE7E0' },
+  { id: 'diamond', name: '다이아', min: 12400, color: '#8FB4FF' },
+  { id: 'master', name: '마스터', min: 15200, color: '#FF7AD9' },
 ];
 
 export const MILESTONES = [
-  { at: 1, coins: 60, label: '첫 판 보상', icon: '🎈' },
-  { at: 3, coins: 120, label: '3판 보상', icon: '🎁' },
-  { at: 5, coins: 180, label: '5판 보상', icon: '💎' },
-  { at: 7, coins: 240, label: '7판 보상', icon: '🏅' },
+  { at: 1, coins: 80, label: '첫 판 보상', icon: '🎈' },
+  { at: 3, coins: 160, label: '3판 보상', icon: '🎁' },
+  { at: 5, coins: 240, label: '5판 보상', icon: '💎' },
+  { at: 7, coins: 320, label: '7판 보상', icon: '🏅' },
 ];
 
-export const CHEST = { coins: 500, theme: 'aurora', title: 'ten', name: '스페셜 보상 상자' };
+export const CHEST = { coins: 700, theme: 'aurora', title: 'ten', name: '스페셜 보상 상자' };
 
 /* -------------------------------------------------------------- leaderboard */
 
 export const SEED_RANKING = [
-  { name: '새벽의직관', score: 9280, avatar: 'owl', title: 'thirty', tag: '마스터' },
-  { name: '시냅스폭주', score: 8740, avatar: 'fire', title: 'combo', tag: '' },
-  { name: '초록불사냥꾼', score: 8310, avatar: 'fox', title: 'fast', tag: '' },
-  { name: '계산기인간', score: 7890, avatar: 'alien', title: 'calc', tag: '' },
-  { name: '픽셀브레인', score: 7460, avatar: 'unicorn', title: 'memory', tag: '' },
-  { name: '반사신경만렙', score: 7020, avatar: 'tiger', title: 'fast', tag: '' },
-  { name: '기억의서랍', score: 6580, avatar: 'panda', title: 'memory', tag: '' },
-  { name: '두뇌풀가동', score: 6140, avatar: 'brain', title: 'combo', tag: '' },
-  { name: '스트룹생존자', score: 5710, avatar: 'octo', title: 'thirty', tag: '' },
-  { name: '콤보수집가', score: 5280, avatar: 'fox', title: 'combo', tag: '' },
-  { name: '번개손가락', score: 4860, avatar: 'alien', title: 'fast', tag: '' },
-  { name: '집중력훈련중', score: 4410, avatar: 'owl', title: 'rookie', tag: '' },
-  { name: '하루한판', score: 3980, avatar: 'panda', title: 'rookie', tag: '' },
-  { name: '주말의두뇌', score: 3540, avatar: 'brain', title: 'rookie', tag: '' },
-  { name: '신입관찰자', score: 3120, avatar: 'brain', title: 'rookie', tag: '' },
+  { name: '새벽의직관', score: 17630, avatar: 'owl', title: 'thirty', tag: '마스터' },
+  { name: '시냅스폭주', score: 16600, avatar: 'fire', title: 'combo', tag: '' },
+  { name: '초록불사냥꾼', score: 15790, avatar: 'fox', title: 'fast', tag: '' },
+  { name: '계산기인간', score: 14990, avatar: 'alien', title: 'calc', tag: '' },
+  { name: '픽셀브레인', score: 14170, avatar: 'unicorn', title: 'memory', tag: '' },
+  { name: '반사신경만렙', score: 13340, avatar: 'tiger', title: 'fast', tag: '' },
+  { name: '기억의서랍', score: 12500, avatar: 'panda', title: 'memory', tag: '' },
+  { name: '두뇌풀가동', score: 11670, avatar: 'brain', title: 'combo', tag: '' },
+  { name: '스트룹생존자', score: 10850, avatar: 'octo', title: 'thirty', tag: '' },
+  { name: '콤보수집가', score: 10030, avatar: 'fox', title: 'combo', tag: '' },
+  { name: '번개손가락', score: 9230, avatar: 'alien', title: 'fast', tag: '' },
+  { name: '집중력훈련중', score: 8380, avatar: 'owl', title: 'rookie', tag: '' },
+  { name: '하루한판', score: 7560, avatar: 'panda', title: 'rookie', tag: '' },
+  { name: '주말의두뇌', score: 6730, avatar: 'brain', title: 'rookie', tag: '' },
+  { name: '신입관찰자', score: 5930, avatar: 'brain', title: 'rookie', tag: '' },
 ];
 
 // Deterministic per-game training leaderboards (seeded, no storage needed).
 const TRAIN_SEEDS = {
-  signal: [6120, 5780, 5450, 5120, 4790, 4460, 4130, 3800, 3470, 3140],
-  sniper: [5960, 5630, 5310, 4980, 4660, 4340, 4020, 3700, 3380, 3060],
-  order: [6380, 6020, 5670, 5310, 4960, 4610, 4260, 3910, 3560, 3210],
-  direction: [6180, 5840, 5500, 5160, 4830, 4490, 4160, 3820, 3490, 3150],
-  stroop: [6020, 5690, 5360, 5030, 4700, 4370, 4050, 3720, 3390, 3060],
-  math: [6450, 6090, 5730, 5370, 5010, 4660, 4300, 3940, 3580, 3220],
-  memory: [6280, 5930, 5580, 5230, 4890, 4540, 4200, 3850, 3510, 3160],
-  odd: [6080, 5740, 5410, 5070, 4740, 4410, 4080, 3740, 3410, 3080],
-  match: [6210, 5870, 5530, 5190, 4860, 4520, 4180, 3840, 3500, 3160],
+  signal: [11630, 10980, 10360, 9730, 9100, 8470, 7850, 7220, 6590, 5970],
+  sniper: [11320, 10700, 10090, 9460, 8850, 8250, 7640, 7030, 6420, 5810],
+  order: [12120, 11440, 10770, 10090, 9420, 8760, 8090, 7430, 6760, 6100],
+  direction: [11740, 11100, 10450, 9800, 9180, 8530, 7900, 7260, 6630, 5990],
+  stroop: [11440, 10810, 10180, 9560, 8930, 8300, 7700, 7070, 6440, 5810],
+  math: [12260, 11570, 10890, 10200, 9520, 8850, 8170, 7490, 6800, 6120],
+  memory: [11930, 11270, 10600, 9940, 9290, 8630, 7980, 7320, 6670, 6000],
+  odd: [11550, 10910, 10280, 9630, 9010, 8380, 7750, 7110, 6480, 5850],
+  match: [11800, 11150, 10510, 9860, 9230, 8590, 7940, 7300, 6650, 6000],
+  judge: [11400, 10820, 10260, 9700, 9160, 8630, 8100, 7570, 7040, 6520],
+  stopwatch: [11000, 10430, 9890, 9350, 8820, 8300, 7780, 7260, 6750, 6240],
+  pattern: [11200, 10620, 10080, 9540, 9010, 8480, 7950, 7420, 6900, 6380],
+  flash: [11600, 11010, 10460, 9910, 9370, 8830, 8300, 7770, 7240, 6720],
 };
 const TRAIN_NAMES = ['새벽의직관', '초록불사냥꾼', '픽셀브레인', '반사신경만렙', '기억의서랍', '두뇌풀가동', '콤보수집가', '번개손가락', '집중력훈련중', '하루한판'];
 const TRAIN_AVATARS = ['owl', 'fox', 'unicorn', 'tiger', 'panda', 'brain', 'octo', 'alien', 'owl', 'panda'];

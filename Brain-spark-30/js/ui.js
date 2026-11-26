@@ -1,11 +1,13 @@
-// BRAIN SPARK 30 — screens, navigation, shop, results
+// BRAIN SPARK 60 — screens, navigation, shop, results
 import {
   GAMES, GAME_BY_ID, SHOP, SHOP_TABS, TIERS, MILESTONES, CHEST, KIND_LABEL, trainingRanking, SEED_RANKING, GRADES,
 } from './data.js';
 import {
   getState, save, stats, cycleInfo, equipped, tierFor, itemOf, isOwned, buy, equip,
   claimMilestone, claimChest, startNextCycle, setNickname, setSetting, clearRecords,
+  addFriend, removeFriend, clearFriends, setPendingChallenge, clearPendingChallenge,
 } from './store.js';
+import { challengeUrl, challengeMessage, decodeChallenge, baseUrl } from './challenge.js';
 import { Session } from './session.js';
 import { sfx, unlockAudio, setBgmEnabled, setSfxEnabled } from './audio.js';
 import { burst, ripple, haptic, setParticleStyle } from './fx.js';
@@ -29,6 +31,7 @@ const ui = {
   lastResult: null,
   resultMode: 'challenge',
   resultGame: null,
+  challengeTarget: null,
 };
 
 /* ------------------------------------------------------------------- utils */
@@ -151,6 +154,20 @@ export function setTab(name) {
 
 /* -------------------------------------------------------------------- lobby */
 
+function challengeBanner(s) {
+  const pc = s.pendingChallenge;
+  if (!pc) return '';
+  return `<div class="challenge-banner">
+    <span class="cb-ico">⚔️</span>
+    <div class="cb-body">
+      <b>${esc(pc.name)}님의 도전장!</b>
+      <span>목표 <em>${num(pc.score)}점</em> · 1분 안에 이겨보세요</span>
+    </div>
+    <button class="cb-go" data-act="challenge-go" type="button">바로 도전</button>
+    <button class="cb-x" data-act="challenge-dismiss" type="button" aria-label="도전장 닫기">${icon('i-close')}</button>
+  </div>`;
+}
+
 function renderLobby() {
   const s = getState();
   const st = stats();
@@ -164,9 +181,11 @@ function renderLobby() {
   <div class="lobby">
     <div class="hero">
       <span class="hero-kicker">DAILY BRAIN BENCHMARK</span>
-      <h1>30초, <span>두뇌 각성</span></h1>
-      <p><b>9가지</b> 미니게임 <i class="hero-dot"></i> 매 판 랜덤 <i class="hero-dot"></i> 콤보 배수 <b>x4.0</b>까지</p>
+      <h1>1분, <span>두뇌 각성</span></h1>
+      <p><b>${GAMES.length}가지</b> 미니게임 <i class="hero-dot"></i> 매 판 랜덤 <i class="hero-dot"></i> 콤보 배수 <b>x4.0</b>까지</p>
     </div>
+
+    ${challengeBanner(s)}
 
     <div class="profile-card card">
       <div class="pf-main">
@@ -194,7 +213,7 @@ function renderLobby() {
     </div>
 
     <button class="cta-main" data-act="start-challenge" type="button">
-      <span class="cta-text"><b>⚡ 30초 종합 챌린지</b><i>지금 바로 두뇌 풀가동 · 매 판 랜덤</i></span>
+      <span class="cta-text"><b>⚡ 1분 종합 챌린지</b><i>지금 바로 두뇌 풀가동 · 매 판 랜덤</i></span>
       <span class="cta-go">${icon('i-play')}</span>
     </button>
     <div class="cta-row">
@@ -219,14 +238,14 @@ function renderLobby() {
     <section class="block">
       <div class="block-head"><h2>최근 기록</h2><button data-act="go-records" type="button">전체 보기</button></div>
       ${recent.length ? `<div class="recent-list">${recent.map(recordRow).join('')}</div>`
-        : `<div class="empty-note">아직 기록이 없어요. 30초 챌린지로 첫 기록을 남겨보세요!</div>`}
+        : `<div class="empty-note">아직 기록이 없어요. 1분 챌린지로 첫 기록을 남겨보세요!</div>`}
     </section>
 
     <section class="block">
-      <div class="block-head"><h2>게임 가이드</h2><span>30초</span></div>
+      <div class="block-head"><h2>게임 가이드</h2><span>1분</span></div>
       <button class="guide-card" data-act="open-guide" type="button">
         <span class="guide-ico">🧠</span>
-        <span class="guide-body"><b>9종 미니게임이 랜덤으로 나옵니다</b><span>콤보를 이어가면 점수 배수가 최대 x4.0까지 올라가요.</span></span>
+        <span class="guide-body"><b>${GAMES.length}종 미니게임이 랜덤으로 나옵니다</b><span>콤보를 이어가면 점수 배수가 최대 x4.0까지 올라가요.</span></span>
         <span class="guide-go">›</span>
       </button>
     </section>
@@ -252,6 +271,20 @@ function rankedRows() {
   const base = training ? trainingRanking(ui.rankGame) : SEED_RANKING.slice();
   const myScore = training ? (s.trainingBest[ui.rankGame] || 0) : s.best;
   const rows = base.map((r) => ({ ...r, me: false }));
+  if (!training) {
+    (s.friends || []).forEach((f) => {
+      rows.push({
+        name: f.name,
+        score: f.score,
+        avatar: f.avatar,
+        frame: f.frame,
+        title: f.title,
+        friend: true,
+        me: false,
+        tag: '',
+      });
+    });
+  }
   rows.push({
     name: s.profile.nickname,
     score: myScore,
@@ -287,7 +320,7 @@ function renderRank() {
     return `<div class="podium-item p${idx + 1}">
       ${idx === 0 ? '<span class="podium-crown">👑</span>' : ''}
       ${avatarHTML(avatarItem, frameItem, idx === 0 ? 'lg' : 'md')}
-      <span class="p-name">${esc(r.name)}${r.me ? ' (나)' : ''}</span>
+      <span class="p-name-row"><span class="p-name">${esc(r.name)}${r.me ? ' (나)' : ''}</span>${r.friend ? '<span class="p-friend">친구</span>' : ''}</span>
       <span class="p-score">${num(r.score)}</span>
       <div class="p-base">${medal[idx]}</div>
     </div>`;
@@ -301,7 +334,7 @@ function renderRank() {
     return `<li class="rk-row${r.me ? ' me' : ''}">
       <span class="rk-no ${i < 3 ? 'top' : ''}">${i + 1}</span>
       ${avatarHTML(avatarItem, frameItem, 'sm')}
-      <div class="rk-name"><b>${esc(r.name)}${r.me ? ' <span class="rk-me-tag">ME</span>' : ''}</b><span style="color:${tier.color}">${title ? esc(title.name) : tier.name}</span></div>
+      <div class="rk-name"><b>${esc(r.name)}${r.me ? ' <span class="rk-me-tag">ME</span>' : ''}${r.friend ? ' <span class="rk-me-tag friend">친구</span>' : ''}</b><span style="color:${tier.color}">${title ? esc(title.name) : tier.name}</span></div>
       <span class="rk-score">${num(r.score)}</span>
     </li>`;
   };
@@ -310,7 +343,7 @@ function renderRank() {
     <div class="page-head">
       <span class="kicker">LEADERBOARD</span>
       <h1>랭킹</h1>
-      <p>${training ? '종목별 최고 기록으로 겨루는 트레이닝 랭킹' : '9가지 미니게임 30초 종합 챌린지 순위'}</p>
+      <p>${training ? '종목별 최고 기록으로 겨루는 트레이닝 랭킹' : `${GAMES.length}가지 미니게임 1분 종합 챌린지 순위`}</p>
     </div>
     <div class="seg">
       <button class="${training ? '' : 'on'}" data-act="rank-mode:challenge" type="button">종합 랭킹</button>
@@ -325,6 +358,16 @@ function renderRank() {
     </ol>
     ${myRank > 14 ? `<div style="margin-top:8px"><ol class="rank-list">${rowHTML(rows[meIdx], meIdx)}</ol></div>` : ''}
     <div class="rank-note">내 최고 기록 ${num(training ? (s.trainingBest[ui.rankGame] || 0) : s.best)}점 · ${myRank}위${training ? ' · ' + (GAME_BY_ID[ui.rankGame]?.name || '') : ''}</div>
+    ${!training && (s.friends || []).length ? `<section class="block friend-manage">
+      <div class="block-head"><h2>도전장 보낸 친구 ${s.friends.length}</h2><button data-act="friends-clear" type="button">전체 삭제</button></div>
+      <div class="recent-list">
+        ${s.friends.map((f) => `<div class="rec-row">
+          <span class="rec-grade fr-badge">⚔️</span>
+          <div class="rec-body"><b>${esc(f.name)}</b><span>${num(f.score)}점 · 정답률 ${f.accuracy}% · ${f.avgMs ? f.avgMs + 'ms' : '—'}</span></div>
+          <button class="fr-del" data-act="friend-del:${encodeURIComponent(f.name)}" type="button" aria-label="${esc(f.name)} 도전장 삭제">${icon('i-close')}</button>
+        </div>`).join('')}
+      </div>
+    </section>` : ''}
   `;
 }
 
@@ -490,17 +533,60 @@ function chartSVG(records) {
   </svg>`;
 }
 
-function shareText() {
+function myChallengeRecord() {
   const s = getState();
   const st = stats();
-  const best = s.records.find((r) => r.score === s.best) || s.records[0];
-  const lines = [
-    '🧠 브레인 스파크 30 — 두뇌·반응속도 챌린지',
-    `최고 점수 ${num(s.best)}점${best ? ` · 등급 ${best.grade}` : ''}`,
-    st.avgMs ? `평균 반응속도 ${num(st.avgMs)}ms · 정답률 ${st.accuracy.toFixed(0)}% · 총 ${st.games}판` : `아직 기록 없음 (${st.games}판 플레이)`,
-    '9가지 미니게임을 30초 안에! ' + location.href.split('?')[0],
-  ];
-  return lines.join('\n');
+  const best = s.records.find((r) => r.mode === 'challenge' && r.score === s.best) || s.records.find((r) => r.mode === 'challenge') || null;
+  return {
+    name: s.profile.nickname,
+    score: s.best || (best ? best.score : 0),
+    avgMs: best ? best.avgMs : Math.round(st.avgMs || 0),
+    accuracy: best ? best.accuracy : Math.round(st.accuracy || 0),
+    maxCombo: best ? best.maxCombo : st.bestCombo,
+    avatar: s.profile.avatar,
+    frame: s.profile.frame,
+    title: s.profile.title,
+    mode: 'challenge',
+    playedAt: best ? best.at : null,
+  };
+}
+
+function recordFromResult(result) {
+  const s = getState();
+  return {
+    name: s.profile.nickname,
+    score: result.score,
+    avgMs: result.avgMs,
+    accuracy: result.accuracy,
+    maxCombo: result.maxCombo,
+    avatar: s.profile.avatar,
+    frame: s.profile.frame,
+    title: s.profile.title,
+    mode: 'challenge',
+    playedAt: result.playedAt,
+  };
+}
+
+/** Copies a challenge link (or opens the share sheet where the browser has one). */
+async function shareChallenge(rec) {
+  if (!rec || !rec.score) {
+    toast('먼저 1분 챌린지를 플레이해 주세요', '⚔️');
+    return false;
+  }
+  const url = challengeUrl(rec);
+  const text = challengeMessage(rec, url);
+  if (!TEST && navigator.share) {
+    try {
+      await navigator.share({ title: '브레인 스파크 60 도전장', text: challengeMessage(rec, '').replace(' 👉 ', ''), url });
+      return true;
+    } catch (e) {
+      if (e && e.name === 'AbortError') return false;
+    }
+  }
+  const ok = await copyText(text);
+  toast(ok ? '도전장 링크를 복사했어요! 친구에게 보내보세요' : '복사에 실패했어요', ok ? '⚔️' : '⚠️');
+  if (ok) sfx('claim');
+  return ok;
 }
 
 async function copyText(text) {
@@ -559,9 +645,10 @@ function renderRecords() {
       }).join('') : '<div class="empty-note">아직 기록이 없습니다. 첫 챌린지를 시작해 보세요!</div>'}
     </div>
     <div class="records-actions">
-      <button class="btn ghost" data-act="share" type="button" style="flex:1">${icon('i-share')} 요약 복사</button>
+      <button class="btn ghost" data-act="challenge-share" type="button" style="flex:1">⚔️ 도전장 링크 복사</button>
       <button class="btn quiet" data-act="reset-records" type="button" style="border:1px solid var(--line)">${icon('i-reset')} 초기화</button>
     </div>
+    <p class="rank-note">도전장 링크를 받은 친구는 랭킹에 자동으로 등록되어 같이 겨룰 수 있어요.</p>
     <p class="rank-note">기록 초기화는 점수·판수만 지우며, 코인과 보유 아이템은 유지됩니다.</p>
   `;
 }
@@ -581,7 +668,7 @@ function showResult(result) {
 
   $('result-layer').innerHTML = `
     <div class="result-card">
-      <span class="res-mode">${result.mode === 'training' ? 'FOCUS TRAINING' : '30S CHALLENGE'} · ${result.mode === 'training' ? esc(GAME_BY_ID[result.gameId]?.name || '') : '9종 랜덤'}</span>
+      <span class="res-mode">${result.mode === 'training' ? 'FOCUS TRAINING' : '60S CHALLENGE'} · ${result.mode === 'training' ? esc(GAME_BY_ID[result.gameId]?.name || '') : `${GAMES.length}종 랜덤`}</span>
       <div class="grade-wrap">
         <div class="grade-ring" style="--gc:${g.color}">
           <span class="grade-letter">${g.grade}</span>
@@ -607,14 +694,14 @@ function showResult(result) {
         <div class="res-coins">${icon('i-coin')} +<b>${result.coins}</b> 코인 <span>· 보유 ${num(result.totalCoins)}</span></div>
         <div class="res-cycle">10판 보상<br><b>${cy.count}/10</b><i class="plus1">+1</i></div>
       </div>
-      ${result.newBest ? `<div class="res-note">🏆 개인 최고 기록을 세웠어요. 랭킹에서 확인해 보세요!</div>` : ''}
+      ${ui.challengeTarget ? `<div class="res-note challenge">⚔️ ${esc(ui.challengeTarget.name)}님 도전장 · 목표 ${num(ui.challengeTarget.score)}점 — ${result.score >= ui.challengeTarget.score ? '이겼어요! 🎉' : `${num(ui.challengeTarget.score - result.score)}점 부족해요`}</div>` : ''}
       ${result.chestReady ? `<div class="res-note">🎁 스페셜 보상 상자가 준비됐어요! 보상 탭에서 열어보세요.</div>`
         : result.milestone ? `<div class="res-note">🎁 ${result.milestone}판 보상이 도착했어요! 보상 탭에서 수령하세요.</div>` : ''}
       <div class="res-actions">
         <button class="btn primary" data-res="retry" type="button">${icon('i-play')} 다시 도전</button>
         <button class="btn ghost" data-res="lobby" type="button">로비로</button>
-        <button class="btn ghost res-share" data-res="share" type="button" aria-label="공유">${icon('i-share')}</button>
       </div>
+      <button class="btn ghost res-challenge" data-res="challenge" type="button">⚔️ 도전장 링크 복사</button>
     </div>`;
 
   const layer = $('result-layer');
@@ -643,17 +730,8 @@ function showResult(result) {
     sfx('tap');
     if (act === 'retry') { hideResult(); startGame(ui.resultMode, ui.resultGame); }
     else if (act === 'lobby') { hideResult(); setTab('lobby'); }
-    else if (act === 'share') copyText(shareResult(result)).then((ok) => toast(ok ? '결과 요약을 복사했어요!' : '복사에 실패했어요', ok ? '📋' : '⚠️'));
+    else if (act === 'challenge') shareChallenge(recordFromResult(result));
   }));
-}
-
-function shareResult(r) {
-  return [
-    `🧠 브레인 스파크 30 — ${r.mode === 'training' ? GAME_BY_ID[r.gameId]?.name : '30초 종합 챌린지'}`,
-    `점수 ${num(r.score)}점 · 등급 ${r.grade.grade} (${r.grade.label})`,
-    `평균 반응 ${r.avgMs || '—'}ms · 정답률 ${r.accuracy}% · 최대 콤보 ${r.maxCombo}`,
-    location.href.split('?')[0],
-  ].join('\n');
 }
 
 function hideResult() {
@@ -669,7 +747,8 @@ export function startGame(mode = 'challenge', gameId = null) {
   sfx('start');
   haptic('tap');
   hideResult();
-  $('game-mode').textContent = mode === 'training' ? (GAME_BY_ID[gameId]?.name || '트레이닝') : '30초 종합 챌린지';
+  ui.challengeTarget = mode === 'challenge' ? getState().pendingChallenge : null;
+  $('game-mode').textContent = mode === 'training' ? (GAME_BY_ID[gameId]?.name || '트레이닝') : '1분 종합 챌린지';
   $('hud-score').textContent = '0';
   $('combo-mult').textContent = 'x1.0';
   $('combo-count').textContent = '콤보 0';
@@ -683,12 +762,17 @@ export function startGame(mode = 'challenge', gameId = null) {
     (result) => {
       ui.session = null;
       window.__BS30_SESSION__ = null;
+      if (ui.challengeTarget && result.mode === 'challenge' && result.score >= ui.challengeTarget.score) {
+        clearPendingChallenge();
+        toast(`${ui.challengeTarget.name}님 도전장 클리어! ⚔️`, '🏆');
+      }
       renderAll();
       showResult(result);
     },
     () => {
       ui.session = null;
       window.__BS30_SESSION__ = null;
+      ui.challengeTarget = null;
       renderAll();
       setTab('lobby');
     },
@@ -707,7 +791,7 @@ function openTraining() {
     </button>`).join('');
   openModal(`
     <h3>종목별 집중 트레이닝</h3>
-    <p>한 종목만 30초 동안 반복합니다. 최고 기록은 종목별로 저장돼요.</p>
+    <p>한 종목만 1분 동안 반복합니다. 최고 기록은 종목별로 저장돼요.</p>
     <div class="modal-list">${rows}</div>
     <div class="modal-actions"><button class="btn ghost" data-modal="cancel" type="button">닫기</button></div>`, {
     onMount(card) {
@@ -722,13 +806,14 @@ function openTraining() {
 
 function openGuide() {
   openModal(`
-    <h3>브레인 스파크 30 플레이 가이드</h3>
-    <p>30초 동안 두뇌 회전 5종과 반응속도 4종이 랜덤으로 등장합니다.</p>
+    <h3>브레인 스파크 60 플레이 가이드</h3>
+    <p>1분 동안 두뇌 회전 ${GAMES.filter((g) => g.kind === 'brain').length}종과 반응속도 ${GAMES.filter((g) => g.kind === 'react').length}종이 랜덤으로 등장합니다.</p>
     <div class="modal-list">
       <div class="ms-item"><span class="ms-icon">⚡</span><div class="ms-body"><b>빠를수록 더 많은 점수</b><span>정답 시간이 짧을수록 속도 보너스가 붙습니다.</span></div></div>
       <div class="ms-item"><span class="ms-icon">🔥</span><div class="ms-body"><b>콤보 배수 x1.0 → x4.0</b><span>연속 정답마다 배수가 올라가고, 틀리면 초기화됩니다.</span></div></div>
       <div class="ms-item"><span class="ms-icon">🎁</span><div class="ms-body"><b>10판마다 보상</b><span>1·3·5·7판 코인, 10판에는 한정 테마 상자까지.</span></div></div>
-      <div class="ms-item"><span class="ms-icon">🎯</span><div class="ms-body"><b>종목별 트레이닝</b><span>약한 종목만 골라 30초 집중 연습할 수 있습니다.</span></div></div>
+      <div class="ms-item"><span class="ms-icon">🎯</span><div class="ms-body"><b>종목별 트레이닝</b><span>약한 종목만 골라 1분 집중 연습할 수 있습니다.</span></div></div>
+      <div class="ms-item"><span class="ms-icon">⚔️</span><div class="ms-body"><b>도전장 링크</b><span>결과 화면에서 링크를 복사해 친구에게 보내면, 친구 랭킹에 기록이 함께 올라갑니다.</span></div></div>
     </div>
     <div class="modal-actions"><button class="btn primary" data-modal="ok" type="button">알겠어요</button></div>`, {
     onMount(card) { qs('[data-modal="ok"]', card).addEventListener('click', closeModal); },
@@ -860,8 +945,26 @@ function bindGlobal() {
       sfx('start');
       toast('새 사이클 시작! 다시 10판 보상이 쌓입니다', '🔄');
       renderAll();
+    } else if (verb === 'challenge-share') {
+      shareChallenge(myChallengeRecord());
+    } else if (verb === 'challenge-go') {
+      sfx('tap');
+      startGame('challenge');
+    } else if (verb === 'challenge-dismiss') {
+      sfx('tap');
+      clearPendingChallenge();
+      renderAll();
+    } else if (verb === 'friend-del') {
+      const name = decodeURIComponent(a || '');
+      if (removeFriend(name)) toast(`${name}님 도전장을 삭제했어요`, '🧹');
+      renderRank();
+      renderTabDot();
+    } else if (verb === 'friends-clear') {
+      if (clearFriends()) toast('도전장 목록을 비웠어요', '🧹');
+      renderRank();
+      renderTabDot();
     } else if (verb === 'share') {
-      copyText(shareText()).then((ok) => toast(ok ? '요약을 클립보드에 복사했어요' : '복사에 실패했어요', ok ? '📋' : '⚠️'));
+      shareChallenge(myChallengeRecord());
     } else if (verb === 'reset-records') {
       confirmModal({
         title: '기록을 초기화할까요?',
@@ -929,6 +1032,27 @@ function bindGlobal() {
   });
 }
 
+/* ----------------------------------------------------- challenge link intake */
+
+/** Reads ?c=… on load, stores the friend record and cleans the address bar. */
+function ingestChallengeLink() {
+  let params;
+  try { params = new URLSearchParams(location.search); } catch (e) { return null; }
+  const token = params.get('c');
+  if (!token) return null;
+  const rec = decodeChallenge(token);
+  if (rec) {
+    addFriend(rec);
+    setPendingChallenge(rec);
+  }
+  params.delete('c');
+  const q = params.toString();
+  try {
+    history.replaceState(null, '', baseUrl() + (q ? `?${q}` : '') + (location.hash || ''));
+  } catch (e) { /* file:// or blocked history — the record is already saved */ }
+  return rec;
+}
+
 /* --------------------------------------------------------------------- boot */
 
 let booted = false;
@@ -942,7 +1066,11 @@ export function boot() {
   bindGlobal();
   applyLook();
   refreshCoins();
+  const incoming = ingestChallengeLink();
   setTab('lobby');
+  if (incoming) {
+    setTimeout(() => toast(`${incoming.name}님의 도전장 도착!`, '⚔️'), 980);
+  }
 
   // hide splash
   setTimeout(() => {
@@ -965,6 +1093,9 @@ export function boot() {
       closeModal,
       ui,
       GAMES,
+      friends: () => getState().friends,
+      challengeLink: () => challengeUrl(myChallengeRecord()),
+      ingest: ingestChallengeLink,
     };
   }
 }

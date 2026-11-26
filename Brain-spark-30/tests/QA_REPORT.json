@@ -1,6 +1,6 @@
 {
-  "passed": 77,
-  "total": 77,
+  "passed": 100,
+  "total": 100,
   "checks": [
     {
       "name": "boots into the lobby",
@@ -23,7 +23,7 @@
       "detail": ""
     },
     {
-      "name": "nine training chips",
+      "name": "thirteen training chips",
       "pass": true,
       "detail": ""
     },
@@ -70,7 +70,7 @@
     {
       "name": "training signal scores on answers",
       "pass": true,
-      "detail": "score=631"
+      "detail": "score=253"
     },
     {
       "name": "training sniper mounts its board",
@@ -80,7 +80,7 @@
     {
       "name": "training sniper scores on answers",
       "pass": true,
-      "detail": "score=1899"
+      "detail": "score=1898"
     },
     {
       "name": "training order mounts its board",
@@ -90,7 +90,7 @@
     {
       "name": "training order scores on answers",
       "pass": true,
-      "detail": "score=1882"
+      "detail": "score=1879"
     },
     {
       "name": "training direction mounts its board",
@@ -100,7 +100,7 @@
     {
       "name": "training direction scores on answers",
       "pass": true,
-      "detail": "score=1785"
+      "detail": "score=1953"
     },
     {
       "name": "training stroop mounts its board",
@@ -110,7 +110,7 @@
     {
       "name": "training stroop scores on answers",
       "pass": true,
-      "detail": "score=1812"
+      "detail": "score=1811"
     },
     {
       "name": "training math mounts its board",
@@ -120,7 +120,7 @@
     {
       "name": "training math scores on answers",
       "pass": true,
-      "detail": "score=1813"
+      "detail": "score=1985"
     },
     {
       "name": "training memory mounts its board",
@@ -140,7 +140,7 @@
     {
       "name": "training odd scores on answers",
       "pass": true,
-      "detail": "score=1985"
+      "detail": "score=1984"
     },
     {
       "name": "training match mounts its board",
@@ -153,24 +153,64 @@
       "detail": "score=1812"
     },
     {
-      "name": "all nine mini-games were answered by the bot",
+      "name": "training judge mounts its board",
       "pass": true,
-      "detail": "['direction', 'match', 'math', 'memory', 'odd', 'order', 'signal', 'sniper', 'stroop']"
+      "detail": "host=judge nodes=True"
+    },
+    {
+      "name": "training judge scores on answers",
+      "pass": true,
+      "detail": "score=1898"
+    },
+    {
+      "name": "training stopwatch mounts its board",
+      "pass": true,
+      "detail": "host=stopwatch nodes=True"
+    },
+    {
+      "name": "training stopwatch scores on answers",
+      "pass": true,
+      "detail": "score=675"
+    },
+    {
+      "name": "training pattern mounts its board",
+      "pass": true,
+      "detail": "host=pattern nodes=True"
+    },
+    {
+      "name": "training pattern scores on answers",
+      "pass": true,
+      "detail": "score=2069"
+    },
+    {
+      "name": "training flash mounts its board",
+      "pass": true,
+      "detail": "host=flash nodes=True"
+    },
+    {
+      "name": "training flash scores on answers",
+      "pass": true,
+      "detail": "score=1894"
+    },
+    {
+      "name": "all thirteen mini-games were answered by the bot",
+      "pass": true,
+      "detail": "['direction', 'flash', 'judge', 'match', 'math', 'memory', 'odd', 'order', 'pattern', 'signal', 'sniper', 'stopwatch', 'stroop']"
     },
     {
       "name": "training bests stored per game",
       "pass": true,
-      "detail": "{'signal': 631, 'sniper': 1899, 'order': 1882, 'direction': 1785, 'stroop': 1812, 'math': 1813, 'memory': 666, 'odd': 1985, 'match': 1812}"
+      "detail": "{'signal': 253, 'sniper': 1898, 'order': 1879, 'direction': 1953, 'stroop': 1811, 'math': 1985, 'memory': 666, 'odd': 1984, 'match': 1812, 'judge': 1898, 'stopwatch': 675, 'pattern': 2069, 'flash': 1894}"
     },
     {
-      "name": "nine sessions recorded",
+      "name": "thirteen sessions recorded",
       "pass": true,
-      "detail": "9"
+      "detail": "13"
     },
     {
       "name": "theme purchase deducts coins",
       "pass": true,
-      "detail": "663 -> 243"
+      "detail": "747 -> 327"
     },
     {
       "name": "theme equipped right away",
@@ -218,14 +258,14 @@
       "detail": ""
     },
     {
-      "name": "challenge runs the full 30 seconds",
+      "name": "challenge runs the full 60 seconds",
       "pass": true,
-      "detail": "28.8s"
+      "detail": "58.9s"
     },
     {
       "name": "challenge cycled multiple games",
       "pass": true,
-      "detail": "['direction', 'match', 'math', 'memory', 'odd', 'signal', 'sniper', 'stroop']"
+      "detail": "['direction', 'flash', 'judge', 'match', 'math', 'memory', 'odd', 'order', 'pattern', 'signal', 'sniper', 'stopwatch', 'stroop']"
     },
     {
       "name": "result overlay appears",
@@ -235,7 +275,7 @@
     {
       "name": "result has a score",
       "pass": true,
-      "detail": "18740"
+      "detail": "54907"
     },
     {
       "name": "result has a grade",
@@ -245,17 +285,27 @@
     {
       "name": "result reports accuracy",
       "pass": true,
-      "detail": "100"
+      "detail": "99"
     },
     {
       "name": "result reports reaction ms",
       "pass": true,
-      "detail": "655"
+      "detail": "287"
+    },
+    {
+      "name": "result screen copies a challenge link",
+      "pass": true,
+      "detail": "🧠 브레인 스파크에서 54,907점 찍음! 이길 수 있으면 눌러봐 👉 http://127.0.0.1:37389/index.html?c=eyJ2IjoxLCJuIjo"
+    },
+    {
+      "name": "challenge link carries a payload",
+      "pass": true,
+      "detail": "eyJ2IjoxLCJuIjoi67KI6rCc65GQ64"
     },
     {
       "name": "challenge saved to records",
       "pass": true,
-      "detail": "18740 vs 18740"
+      "detail": "54907 vs 54907"
     },
     {
       "name": "cycle counter advanced",
@@ -265,12 +315,12 @@
     {
       "name": "coins increased",
       "pass": true,
-      "detail": "123 -> 586"
+      "detail": "207 -> 507"
     },
     {
       "name": "best score updated",
       "pass": true,
-      "detail": "18740"
+      "detail": "54907"
     },
     {
       "name": "milestone claim button appears",
@@ -280,7 +330,7 @@
     {
       "name": "milestone claim pays coins",
       "pass": true,
-      "detail": "586 -> 646"
+      "detail": "507 -> 587"
     },
     {
       "name": "milestone marked claimed",
@@ -295,7 +345,7 @@
     {
       "name": "chest grants coins",
       "pass": true,
-      "detail": "646 -> 1146"
+      "detail": "587 -> 1287"
     },
     {
       "name": "chest grants limited items",
@@ -315,27 +365,27 @@
     {
       "name": "history list shows runs",
       "pass": true,
-      "detail": "10"
+      "detail": "14"
     },
     {
-      "name": "share copies a summary",
+      "name": "records screen copies a challenge link",
       "pass": true,
-      "detail": "🧠 브레인 스파크 30 — 두뇌·반응속도 챌린지 / 최고 점수 18,740점 · 등급 S+ / 평균 반응속도 445"
+      "detail": "🧠 브레인 스파크에서 54,907점 찍음! 이길 수 있으면 눌러봐 👉 http://127.0.0.1:37389/index.ht"
     },
     {
       "name": "coins survive reload",
       "pass": true,
-      "detail": "1146"
+      "detail": "1287"
     },
     {
       "name": "best score survives reload",
       "pass": true,
-      "detail": "18740"
+      "detail": "54907"
     },
     {
       "name": "records survive reload",
       "pass": true,
-      "detail": "10"
+      "detail": "14"
     },
     {
       "name": "theme survives reload",
@@ -368,6 +418,71 @@
       "detail": "[440, 864]"
     },
     {
+      "name": "challenge link registers the friend",
+      "pass": true,
+      "detail": "[{'name': '번개두뇌', 'score': 54907, 'avgMs': 287, 'accuracy': 99, 'maxCombo': 39, 'avatar': 'fox', 'frame': 'basic', 'title': 'rookie', 'mode': 'challenge', 'playedAt': '2026-11-26T09:06:53.568Z', 'at': 1795684026701}]"
+    },
+    {
+      "name": "challenge link carries the sent score",
+      "pass": true,
+      "detail": "54907 vs 54907"
+    },
+    {
+      "name": "address bar is cleaned after intake",
+      "pass": true,
+      "detail": "http://127.0.0.1:37389/index.html?test=1"
+    },
+    {
+      "name": "challenge banner names the friend",
+      "pass": true,
+      "detail": "⚔️ / 번개두뇌님의 도전장! / 목표 54,907점 · 1분 안에 이겨보세요 / 바로 도전"
+    },
+    {
+      "name": "challenge banner shows the target score",
+      "pass": true,
+      "detail": "⚔️ / 번개두뇌님의 도전장! / 목표 54,907점 · 1분 안에 이겨보세요 / 바로 도전"
+    },
+    {
+      "name": "banner button starts the challenge",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "friend appears in the ranking with a 친구 badge",
+      "pass": true,
+      "detail": "1"
+    },
+    {
+      "name": "friend name is listed in the ranking",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "ranking has a friend management row",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "friend survives reload without duplicates",
+      "pass": true,
+      "detail": "1"
+    },
+    {
+      "name": "challenge banner survives reload",
+      "pass": true,
+      "detail": ""
+    },
+    {
+      "name": "a higher score from the same friend replaces the row",
+      "pass": true,
+      "detail": "[{'name': '번개두뇌', 'score': 56407, 'avgMs': 180, 'accuracy': 92, 'maxCombo': 18, 'avatar': 'fox', 'frame': 'bronze', 'title': 'rookie', 'mode': 'challenge', 'playedAt': '2026-11-26T09:07:12.396Z', 'at': 1795684026701}]"
+    },
+    {
+      "name": "friend list can be cleared",
+      "pass": true,
+      "detail": "[]"
+    },
+    {
       "name": "reset clears records",
       "pass": true,
       "detail": "0"
@@ -375,7 +490,7 @@
     {
       "name": "reset keeps coins",
       "pass": true,
-      "detail": "1146 -> 1146"
+      "detail": "1287 -> 1287"
     },
     {
       "name": "reset keeps owned items",

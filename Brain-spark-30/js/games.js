@@ -1,4 +1,4 @@
-// BRAIN SPARK 30 — nine mini-games.
+// BRAIN SPARK 60 — thirteen mini-games.
 // Each game exposes start(ctx) and returns a cleanup function.
 // ctx.hit / ctx.miss end the round; ctx.partial scores a step and keeps it going.
 
@@ -595,4 +595,314 @@ const match = {
   },
 };
 
-export const MINI_GAMES = { signal, sniper, order, direction, stroop, math, memory, odd, match };
+/* ------------------------------------------------------- 10. 순간 판별 */
+
+const judge = {
+  start(ctx) {
+    const d = ctx.difficulty;
+    const mode = pick(d < 0.5 ? ['big', 'small'] : ['big', 'small', 'even', 'odd']);
+    let a;
+    let b;
+    let answer;
+    let label;
+
+    if (mode === 'even' || mode === 'odd') {
+      const span = d < 0.9 ? 49 : 98;
+      const evenN = ri(11, span) * 2;
+      const oddN = ri(11, span) * 2 + 1;
+      if (Math.random() < 0.5) { a = evenN; b = oddN; } else { a = oddN; b = evenN; }
+      answer = mode === 'even' ? evenN : oddN;
+      label = mode === 'even' ? '짝수' : '홀수';
+    } else {
+      const hi = d < 0.8 ? 60 : 99;
+      a = ri(10, hi);
+      b = ri(10, hi);
+      let guard = 0;
+      while (Math.abs(a - b) < 2 && guard++ < 60) b = ri(10, hi);
+      answer = mode === 'big' ? Math.max(a, b) : Math.min(a, b);
+      label = mode === 'big' ? '더 큰 수' : '더 작은 수';
+    }
+
+    const wrap = h('div', 'g g-judge');
+    const rule = h('div', 'jd-rule', `${label} <em>탭!</em>`);
+    const row = h('div', 'jd-row');
+    const hint = h('div', 'g-hint', '읽자마자 바로 터치하세요');
+    wrap.append(rule, row, hint);
+    ctx.host.append(wrap);
+
+    let resolved = false;
+    [a, b].forEach((value) => {
+      const b2 = h('button', 'jd-card', `<b>${value}</b><span>${value % 2 === 0 ? '짝' : '홀'}</span>`);
+      b2.type = 'button';
+      b2.dataset.v = String(value);
+      if (value === answer && ctx.isTest) b2.dataset.ok = '1';
+      b2.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        if (resolved) return;
+        resolved = true;
+        const ms = ctx.ms();
+        if (value === answer) ctx.hit(110, { ms, label: `${label} 정답`, perfect: ms < 700 });
+        else {
+          b2.classList.add('bad');
+          row.querySelectorAll('.jd-card').forEach((c) => {
+            if (Number(c.dataset.v) === answer) c.classList.add('reveal');
+          });
+          ctx.miss({ label: `정답은 ${answer}` });
+        }
+      });
+      row.append(b2);
+    });
+
+    ctx.sound('tick');
+    return () => {};
+  },
+};
+
+/* ------------------------------------------------------ 11. 초시계 스톱 */
+
+const stopwatch = {
+  start(ctx) {
+    const d = ctx.difficulty;
+    const zoneW = d < 0.7 ? 30 : d < 1.3 ? 24 : 19;
+    const center = rnd(33, 67);
+    const SWEEP = 1500; // ms for one full left→right pass
+    const LIMIT = 3000;
+
+    const wrap = h('div', 'g g-stop');
+    const head = h('div', 'st-head', '<span>EXACT STOP</span>');
+    const gauge = h('div', 'st-gauge');
+    const zone = h('span', 'st-zone');
+    const marker = h('span', 'st-marker');
+    const readout = h('div', 'st-readout', '<b>0.00</b><i>s</i>');
+    gauge.append(zone, marker);
+    gauge.style.setProperty('--zone-w', zoneW + '%');
+    gauge.style.setProperty('--zone-x', (center - zoneW / 2) + '%');
+    const btn = h('button', 'st-btn', 'STOP');
+    btn.type = 'button';
+    btn.dataset.hit = '0';
+    const hint = h('div', 'g-hint', '노란 존 <b>가운데</b>에서 멈추면 퍼펙트');
+    wrap.append(head, gauge, readout, btn, hint);
+    ctx.host.append(wrap);
+
+    const posOf = (t) => {
+      const k = (t % (SWEEP * 2)) / SWEEP;
+      return k <= 1 ? k : 2 - k;
+    };
+
+    let resolved = false;
+    let armed = false;
+    let raf = 0;
+    const frame = () => {
+      if (resolved) return;
+      const t = ctx.ms();
+      const p = posOf(t) * 100;
+      marker.style.left = p.toFixed(2) + '%';
+      const inside = Math.abs(p - center) <= zoneW / 2;
+      if (inside !== armed) {
+        armed = inside;
+        btn.dataset.hit = inside ? '1' : '0';
+        btn.classList.toggle('armed', inside);
+        if (inside) ctx.sound('tick');
+      }
+      readout.innerHTML = `<b>${(t / 1000).toFixed(2)}</b><i>s</i>`;
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+
+    btn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      if (resolved) return;
+      resolved = true;
+      cancelAnimationFrame(raf);
+      const t = ctx.ms();
+      const p = posOf(t) * 100;
+      const dist = Math.abs(p - center);
+      if (dist <= zoneW / 2) {
+        const acc = 1 - dist / (zoneW / 2);
+        btn.classList.add('done');
+        ctx.hit(80 + Math.round(acc * 80), {
+          ms: t,
+          label: `${t}ms · ${acc > 0.72 ? '퍼펙트!' : '성공'}`,
+          perfect: acc > 0.72,
+        });
+      } else {
+        btn.classList.add('bad');
+        ctx.miss({ label: '존을 벗어났어요' });
+      }
+    });
+
+    ctx.setLimit(LIMIT);
+    return () => cancelAnimationFrame(raf);
+  },
+};
+
+/* -------------------------------------------------------- 12. 패턴 빈칸 */
+
+const PT_COLORS = ['#FF5C6C', '#4C8DFF', '#2FE08A', '#FFC24B', '#B071FF'];
+const PT_SHAPES = ['◆', '●', '▲', '■', '✦'];
+
+const pattern = {
+  start(ctx) {
+    const d = ctx.difficulty;
+    const kind = pick(d < 0.6 ? ['add', 'shapes'] : ['add', 'double', 'shapes', 'colors']);
+    const tokens = [];
+    let answerKey = '';
+    let optionKeys = [];
+    const numTok = (v) => ({ key: String(v), html: `<span class="pt-num">${v}</span>` });
+
+    if (kind === 'add') {
+      const stepSize = ri(2, d < 0.6 ? 5 : 9);
+      const start = ri(1, d < 0.6 ? 9 : 20);
+      for (let i = 0; i < 4; i++) tokens.push(numTok(start + stepSize * i));
+      answerKey = String(start + stepSize * 4);
+      const cand = [answerKey, start + stepSize * 3, start + stepSize * 5, start + stepSize * 6];
+      optionKeys = [...new Set(cand)];
+    } else if (kind === 'double') {
+      const start = ri(2, 5);
+      const seq = [start, start * 2, start * 4, start * 8];
+      seq.forEach((v) => tokens.push(numTok(v)));
+      answerKey = String(start * 16);
+      optionKeys = [...new Set([answerKey, start * 12, start * 20, start * 24, start * 32].map(String))];
+    } else {
+      const setLen = d < 0.9 ? 2 : pick([2, 3]);
+      const isColor = kind === 'colors';
+      const pool = isColor ? PT_COLORS : PT_SHAPES;
+      const set = shuffle(pool).slice(0, setLen);
+      const htmlOf = (v) => (isColor
+        ? `<span class="pt-dot" style="background:${v};box-shadow:0 0 16px ${v}88"></span>`
+        : `<span class="pt-glyph">${v}</span>`);
+      for (let i = 0; i < 4; i++) tokens.push({ key: set[i % setLen], html: htmlOf(set[i % setLen]) });
+      answerKey = set[4 % setLen];
+      optionKeys = set.slice();
+    }
+
+    const wrap = h('div', 'g g-pattern');
+    const rule = h('div', 'pt-rule', '규칙을 찾아 빈칸을 채우세요');
+    const seqEl = h('div', 'pt-seq');
+    tokens.forEach((t, i) => {
+      const c = h('span', 'pt-chip');
+      c.innerHTML = t.html;
+      c.style.setProperty('--d', `${i * 55}ms`);
+      seqEl.append(c);
+    });
+    seqEl.append(h('span', 'pt-chip blank', '?'));
+    const opts = h('div', 'pt-opts');
+    const shown = shuffle(optionKeys).slice(0, 4);
+    opts.style.gridTemplateColumns = `repeat(${Math.min(4, shown.length)}, minmax(0, 1fr))`;
+    wrap.append(rule, seqEl, opts);
+    ctx.host.append(wrap);
+
+    let resolved = false;
+    shown.forEach((key) => {
+      const src = tokens.find((t) => t.key === key);
+      const html = src ? src.html : (PT_SHAPES.includes(key) ? `<span class="pt-glyph">${key}</span>`
+        : PT_COLORS.includes(key) ? `<span class="pt-dot" style="background:${key};box-shadow:0 0 16px ${key}88"></span>`
+          : `<span class="pt-num">${key}</span>`);
+      const b = h('button', 'pt-opt');
+      b.type = 'button';
+      b.innerHTML = html;
+      b.dataset.key = key;
+      if (key === answerKey && ctx.isTest) b.dataset.ok = '1';
+      b.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        if (resolved) return;
+        resolved = true;
+        const ms = ctx.ms();
+        if (key === answerKey) ctx.hit(120, { ms, label: '패턴 완성!', perfect: ms < 1800 });
+        else {
+          b.classList.add('bad');
+          ctx.miss({ label: '규칙이 달라요' });
+        }
+      });
+      opts.append(b);
+    });
+
+    return () => {};
+  },
+};
+
+/* ----------------------------------------------------- 13. 플래시 그리드 */
+
+const flash = {
+  start(ctx) {
+    const d = ctx.difficulty;
+    const steps = d < 0.8 ? 4 : 5;
+    const win = d < 0.7 ? 950 : d < 1.3 ? 780 : 640;
+
+    const wrap = h('div', 'g g-flash');
+    const head = h('div', 'fl-head', `<span>FLASH</span><b>0<i>/${steps}</i></b>`);
+    const grid = h('div', 'fl-grid');
+    const hint = h('div', 'g-hint', '번쩍이는 칸만 빠르게 터치');
+    wrap.append(head, grid, hint);
+    ctx.host.append(wrap);
+
+    const cells = [];
+    for (let i = 0; i < 9; i++) {
+      const c = h('button', 'fl-cell');
+      c.type = 'button';
+      c.dataset.i = String(i);
+      cells.push(c);
+      grid.append(c);
+    }
+
+    let resolved = false;
+    let hits = 0;
+    let step = 0;
+    let current = -1;
+
+    const lightNext = () => {
+      if (resolved) return;
+      if (hits >= steps) {
+        resolved = true;
+        ctx.hit(150, { ms: ctx.ms(), label: `${steps}연속 명중!`, perfect: true });
+        return;
+      }
+      if (current >= 0) {
+        cells[current].classList.remove('lit');
+        delete cells[current].dataset.ok;
+      }
+      let n = ri(0, 8);
+      let guard = 0;
+      while (n === current && guard++ < 30) n = ri(0, 8);
+      current = n;
+      cells[n].classList.add('lit');
+      cells[n].dataset.ok = '1';
+      ctx.sound('tick');
+      const myStep = ++step;
+      ctx.timeout(() => {
+        if (resolved || step !== myStep) return;
+        resolved = true;
+        cells[n].classList.remove('lit');
+        delete cells[n].dataset.ok;
+        cells[n].classList.add('bad');
+        ctx.miss({ label: '불빛을 놓쳤어요' });
+      }, win);
+    };
+
+    cells.forEach((c, i) => c.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      if (resolved) return;
+      if (c.classList.contains('lit')) {
+        c.classList.remove('lit');
+        delete c.dataset.ok;
+        c.classList.add('ok');
+        hits += 1;
+        head.querySelector('b').innerHTML = `${hits}<i>/${steps}</i>`;
+        ctx.partial(36, { label: '히트', at: { x: ev.clientX, y: ev.clientY } });
+        lightNext();
+      } else {
+        resolved = true;
+        c.classList.add('bad');
+        ctx.miss({ label: '다른 칸이었어요' });
+      }
+    }));
+
+    ctx.setLimit(steps * win + 600);
+    ctx.timeout(() => lightNext(), 260);
+    return () => {};
+  },
+};
+
+export const MINI_GAMES = {
+  signal, sniper, order, direction, stroop, math, memory, odd, match, judge, stopwatch, pattern, flash,
+};

@@ -1,11 +1,11 @@
-// BRAIN SPARK 30 — 30-second session engine, scoring, combo and results
+// BRAIN SPARK 60 — 60-second session engine, scoring, combo and results
 import { GAMES, GAME_BY_ID, GRADES, KIND_LABEL } from './data.js';
 import { MINI_GAMES } from './games.js';
 import { recordGame, getState, gradeFor } from './store.js';
 import { sfx } from './audio.js';
 import { burst, ripple, haptic } from './fx.js';
 
-export const DURATION = 30000;
+export const DURATION = 60000;
 const COMBO_TABLE = [1.0, 1.25, 1.5, 1.75, 2.0, 2.3, 2.6, 3.0, 3.4, 3.7, 4.0];
 
 export function comboMultiplier(combo) {
@@ -338,7 +338,7 @@ export class Session {
 
   updatePips() {
     const wrap = $('round-pips');
-    wrap.innerHTML = this.results.slice(-14).map((r) => `<i class="${r}"></i>`).join('');
+    wrap.innerHTML = this.results.slice(-16).map((r) => `<i class="${r}"></i>`).join('');
   }
 
   /* -------------------------------------------------------------------- result */
@@ -354,9 +354,10 @@ export class Session {
     const accuracy = this.rounds ? (this.correct / this.rounds) * 100 : 0;
     const avgMs = this.reactN ? Math.round(this.reactSum / this.reactN) : 0;
     const grade = gradeFor(this.score);
-    let coins = Math.max(3, Math.round(this.score / 45));
-    if (accuracy >= 85 && this.rounds >= 4) coins += 15;
-    coins += Math.min(40, Math.round(this.maxCombo * 1.2));
+    let coins = Math.max(5, Math.round(this.score / 75));
+    if (accuracy >= 85 && this.rounds >= 6) coins += 20;
+    coins += Math.min(50, Math.round(this.maxCombo * 1.5));
+    coins = Math.min(300, coins);
 
     const result = {
       mode: this.mode,

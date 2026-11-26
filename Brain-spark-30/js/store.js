@@ -1,4 +1,4 @@
-// BRAIN SPARK 30 — persistent player state (localStorage)
+// BRAIN SPARK 60 — persistent player state (localStorage)
 import { CHEST, GAMES, GRADES, MILESTONES, SHOP, TIERS, GAME_BY_ID } from './data.js';
 
 const KEY = 'brainspark30.v1';
@@ -23,6 +23,8 @@ export function defaultState() {
     },
     settings: { sfx: true, bgm: true },
     introSeen: false,
+    friends: [],
+    pendingChallenge: null,
   };
 }
 
@@ -36,6 +38,8 @@ function merge(base, saved) {
   if (!Array.isArray(out.records)) out.records = [];
   if (!Array.isArray(out.cycle.claimed)) out.cycle.claimed = [];
   if (!out.trainingBest || typeof out.trainingBest !== 'object') out.trainingBest = {};
+  if (!Array.isArray(out.friends)) out.friends = [];
+  if (out.pendingChallenge && typeof out.pendingChallenge !== 'object') out.pendingChallenge = null;
   // never lose a default item
   for (const kind of Object.keys(base.owned)) {
     const set = new Set([...(out.owned[kind] || []), ...base.owned[kind]]);
@@ -288,4 +292,73 @@ export function exportState() {
 
 export function gameCountFor(kind) {
   return GAMES.filter((g) => g.kind === kind).length;
+}
+
+/* ---------------------------------------------------------- challenge links */
+
+/**
+ * Stores a record that arrived through a challenge link.
+ * Same nickname keeps a single row; a higher score replaces the old one.
+ */
+export function addFriend(rec) {
+  if (!rec || !rec.name) return { ok: false, isNew: false, upgraded: false };
+  const list = state.friends;
+  const at = Date.now();
+  const entry = {
+    name: String(rec.name).slice(0, 12),
+    score: Math.max(0, Math.min(999999, Math.round(Number(rec.score) || 0))),
+    avgMs: Math.max(0, Math.round(Number(rec.avgMs) || 0)),
+    accuracy: Math.max(0, Math.min(100, Math.round(Number(rec.accuracy) || 0))),
+    maxCombo: Math.max(0, Math.round(Number(rec.maxCombo) || 0)),
+    avatar: rec.avatar || 'brain',
+    frame: rec.frame || 'basic',
+    title: rec.title || 'rookie',
+    mode: rec.mode === 'training' ? 'training' : 'challenge',
+    playedAt: rec.playedAt || null,
+    at,
+  };
+  const i = list.findIndex((f) => f.name === entry.name);
+  if (i === -1) {
+    list.push(entry);
+    list.sort((a, b) => b.score - a.score);
+    save();
+    return { ok: true, isNew: true, upgraded: false, friend: entry };
+  }
+  const prev = list[i];
+  if (entry.score > prev.score) {
+    list[i] = { ...entry, at: prev.at || at };
+    list.sort((a, b) => b.score - a.score);
+    save();
+    return { ok: true, isNew: false, upgraded: true, friend: list[i], prevScore: prev.score };
+  }
+  return { ok: true, isNew: false, upgraded: false, friend: prev };
+}
+
+export function removeFriend(name) {
+  const before = state.friends.length;
+  state.friends = state.friends.filter((f) => f.name !== name);
+  if (state.pendingChallenge && state.pendingChallenge.name === name) state.pendingChallenge = null;
+  save();
+  return state.friends.length !== before;
+}
+
+export function clearFriends() {
+  const before = state.friends.length;
+  state.friends = [];
+  state.pendingChallenge = null;
+  save();
+  return before > 0;
+}
+
+export function setPendingChallenge(rec) {
+  state.pendingChallenge = rec
+    ? { name: String(rec.name).slice(0, 12), score: Math.round(Number(rec.score) || 0), at: Date.now() }
+    : null;
+  save();
+  return state.pendingChallenge;
+}
+
+export function clearPendingChallenge() {
+  state.pendingChallenge = null;
+  save();
 }
